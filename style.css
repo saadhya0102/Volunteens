@@ -396,11 +396,6 @@ header{
     font-size: 14px;
  }
 
- .card-location{
-    margin-top: 10px;
-    font-size: 14px;
- }
-
  #dataList{
     display: flex;
     flex-direction: column;

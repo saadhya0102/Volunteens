@@ -27,26 +27,33 @@ fetch('https://api.airtable.com/v0/appVuPVt4NexTjNPj/Roles', {
 const dataContainer = document.getElementById('dataList');
 dataContainer.innerHTML = '';
 
-//Fetch linked records for each data record
-const linkedRecordIds = data.records.map(record => {
-  const linkedFieldOrganization = record.fields.Organization;
-  const linkedFieldLocation = record.fields.Location;
-  console.log('LinkedField:', linkedFieldOrganization);
-  console.log('LinkeField:', linkedFieldLocation);
-  return {
-    record: record,
-    organization: linkedFieldOrganization,
-    location: linkedFieldLocation
-  };
-});
+data.records.forEach(record => {
+/*
+  const card  = document.createElement('div');
+  card.className = 'card';
 
-Promise.all(linkedRecordIds.map(record =>fetchLinkedRecord(record)))
-  .then(linkedRecords =>{
-    data.records.forEach((record,index)=> {
-      const LinkedRecord = linkedRecords[index];
-      
 
-        const cardDiv = document.createElement('div');
+  const cardImage = document.createElement('img');
+  cardImage.className = 'card-image';
+  cardImage.src = item.Picture;
+
+  const cardContent = document.createElement('div');
+  cardContent.className = 'card-content';
+
+  const cardTitle = document.createElement('h3');
+  cardTitle.className = 'card-title';
+  cardTitle.textContent = item.Name
+
+  const cardOverview = document.createElement('p');
+  cardOverview.className = 'card-overview';
+  cardOverview.textContent = item.Overview;
+
+  const cardOrganization = document.createElement('p');
+  cardOrganization.className = 'card-organization';
+  cardOrganization.textContent = item.Organization;
+*/
+
+         const cardDiv = document.createElement('div');
         cardDiv.classList.add('card');
 
         const cardImage = document.createElement('img');
@@ -66,27 +73,16 @@ Promise.all(linkedRecordIds.map(record =>fetchLinkedRecord(record)))
 
         const cardOrganization = document.createElement('p');
         cardOrganization.classList.add('card-organization');
-        cardOrganization.textContent = LinkedRecord.organization || '';
-
-        const cardLocation = document.createElement('p');
-        cardLocation.classList.add('card-location');
-        cardLocation.textContent = LinkedRecord.location || '';
-
+        cardOrganization.textContent = record.fields['Organization'] || '';
 
         cardContent.appendChild(cardTitle);
         cardContent.appendChild(cardOverview);
         cardContent.appendChild(cardOrganization);
-        cardContent.appendChild(cardLocation);
 
         cardDiv.appendChild(cardImage);
         cardDiv.appendChild(cardContent);
 
         dataContainer.appendChild(cardDiv);
-   
-      });
-    })
-      .catch(error =>{
-        console.error('Error fetching linked records:', error);
       });
     })
     .catch(error => {
@@ -95,55 +91,31 @@ Promise.all(linkedRecordIds.map(record =>fetchLinkedRecord(record)))
 }
 
 
+  /*
+data.records.forEach(record => {
+  const cardDiv = document.createElement('div');
+  cardDiv.classList.add('card');
 
-function fetchLinkedRecord(record) {
-  console.log('Record:', record);
-  // Fetch a linked record by its ID
-  const url = `https://api.airtable.com/v0/appVuPVt4NexTjNPj/Volunteer%20Service?filterByFormula=AND(Organization="${record.organization}", Location="${record.location}")`;
+  const name = record.fields['Name'] || '';
+  const description = record.fields['Overview'] || '';
 
+  cardDiv.innerHTML = `
+    <h2 class = "volunteer_title">${name}</h2>
+    <p class = "overview">${description}</p>
+  `;
 
-  return fetch(url, {
-    headers: {
-      'Authorization': 'Bearer keyhRdrFmvbRGMKRk',
-      'Content-Type': 'application/json'
-    }
-
+  dataContainer.appendChild(cardDiv);
+});
 })
-.then(response => {
-  if (!response.ok) {
-    throw new Error('Unable to fetch linked record');
-  }
-  return response.json();
-})
-.then(data => {
-  console.log('Fetched LinkedRecord:', data);
-    /*
-    organization: data.fields['Organization'], // Replace 'Organization' with the actual field name
-    // Add more fields as needed
-    location: data.fields['Location']
-    */
-    if (data.records && data.records.length > 0) {
-      const linkedRecord = data.records[0];
-      const organization = linkedRecord.fields && linkedRecord.fields.Organization ? linkedRecord.fields.Organization : '';
-      const location = linkedRecord.fields && linkedRecord.fields.Location ? linkedRecord.fields.Location : '';
-
-      return {
-        organization: organization,
-        location: location
-      };
-    } 
-    else {
-      return {
-        organization: '',
-        location: ''
-      };
-    }
-  });
-}
-
+*/
 
 
 
 function updateDataPeriodically(){
   fetchData();
+  setInterval(fetchData,5000);
 }
+
+
+
+
