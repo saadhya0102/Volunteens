@@ -8,7 +8,7 @@ menu.addEventListener('click',function(){
 })
 }
 
-menu();
+
 
 
 function fetchData(){
@@ -31,7 +31,8 @@ dataContainer.innerHTML = '';
 const linkedRecordIds = data.records.map(record => {
   const linkedFieldOrganization = record.fields.Organization;
   const linkedFieldLocation = record.fields.Location;
-
+  console.log('LinkedField:', linkedFieldOrganization);
+  console.log('LinkeField:', linkedFieldLocation);
   return {
     record: record,
     organization: linkedFieldOrganization,
@@ -39,17 +40,7 @@ const linkedRecordIds = data.records.map(record => {
   };
 });
 
-const fetchPromises = linkedRecordIds.map(record => fetchLinkedRecord(record));
-const delay = 1000; // Delay in milliseconds between requests
-let delayCounter = 0;
-
-Promise.all(fetchPromises.map(promise => {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(promise);
-    }, delay * delayCounter++);
-  });
-}))
+Promise.all(linkedRecordIds.map(record =>fetchLinkedRecord(record)))
   .then(linkedRecords =>{
     data.records.forEach((record,index)=> {
       const LinkedRecord = linkedRecords[index];
@@ -106,6 +97,7 @@ Promise.all(fetchPromises.map(promise => {
 
 
 function fetchLinkedRecord(record) {
+  console.log('Record:', record);
   // Fetch a linked record by its ID
   const url = `https://api.airtable.com/v0/appVuPVt4NexTjNPj/Volunteer%20Service?filterByFormula=AND(Organization="${record.organization}", Location="${record.location}")`;
 
@@ -124,6 +116,7 @@ function fetchLinkedRecord(record) {
   return response.json();
 })
 .then(data => {
+  console.log('Fetched LinkedRecord:', data);
     /*
     organization: data.fields['Organization'], // Replace 'Organization' with the actual field name
     // Add more fields as needed
@@ -145,13 +138,6 @@ function fetchLinkedRecord(record) {
         location: ''
       };
     }
-  })
-  .catch(error => {
-    console.error('Error fetching linked record:', error);
-    return {
-      organization: '',
-      location: ''
-    };
   });
 }
 
