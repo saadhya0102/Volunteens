@@ -1,13 +1,14 @@
-function menu(){
-const menu = document.querySelector('#menu-icon');
-const navbar = document.querySelector('.navbar');
+function menu() {
+  const menuIcon = document.getElementById('menu-icon');
+  const navbar = document.querySelector('.navbar');
 
-menu.addEventListener('click',function(){
-    menu.classList.toggle('bx-x');
+  menuIcon.addEventListener('click', function() {
+    menuIcon.classList.toggle('bx-x');
     navbar.classList.toggle('open');
-})
+  });
 }
 
+menu();
 
 
 
