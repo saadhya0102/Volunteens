@@ -8,8 +8,6 @@ function menu() {
   });
 }
 
-menu();
-
 
 
 function fetchData(){
@@ -30,121 +28,144 @@ dataContainer.innerHTML = '';
 
 //Fetch linked records for each data record
 const linkedRecordIds = data.records.map(record => {
-  const linkedFieldOrganization = record.fields.Organization;
-  const linkedFieldLocation = record.fields.Location;
-  console.log('LinkedField:', linkedFieldOrganization);
-  console.log('LinkeField:', linkedFieldLocation);
-  return {
-    record: record,
-    organization: linkedFieldOrganization,
-    location: linkedFieldLocation
-  };
+  const linkedFieldValue = record.fields.Organization;
+  return linkedFieldValue;
 });
 
-Promise.all(linkedRecordIds.map(record =>fetchLinkedRecord(record)))
+Promise.all(linkedRecordIds.map(recordId =>fetchLinkedRecord(recordId)))
   .then(linkedRecords =>{
     data.records.forEach((record,index)=> {
       const LinkedRecord = linkedRecords[index];
       
 
         const cardDiv = document.createElement('div');
-        cardDiv.classList.add('card');
+        cardDiv.classList.add('col-12');
+
+        const cardBody = document.createElement('div');
+        cardBody.classList.add('card', 'mb-3');
+
+        const rowDiv = document.createElement('div');
+        rowDiv.classList.add('row', 'no-gutters');
+
+        const imageColumn = document.createElement('div');
+        imageColumn.classList.add('col-md-4');
 
         const cardImage = document.createElement('img');
         cardImage.classList.add('card-image');
         cardImage.src = record.fields['Picture'] || '';
 
-        const cardContent = document.createElement('div');
-        cardContent.classList.add('card-content');
+        cardDiv.appendChild(cardBody);
+        cardBody.appendChild(rowDiv);
+        imageColumn.appendChild(cardImage);
+        rowDiv.appendChild(imageColumn);
 
+        const contentColumn = document.createElement('div');
+        contentColumn.classList.add('col-md-8');
+
+        const cardBodyInner = document.createElement('div');
+        cardBodyInner.classList.add('card-body');
+        
         const cardTitle = document.createElement('h3');
         cardTitle.classList.add('card-title');
         cardTitle.textContent = record.fields['Name'] || '';
-
-        const cardOverview = document.createElement('p');
-        cardOverview.classList.add('card-overview');
-        cardOverview.textContent = record.fields['Overview'] || '';
 
         const cardOrganization = document.createElement('p');
         cardOrganization.classList.add('card-organization');
         cardOrganization.textContent = LinkedRecord.organization || '';
 
+        const cardOverview = document.createElement('p');
+        cardOverview.classList.add('card-overview');
+        cardOverview.textContent = record.fields['Overview'] || '';
+
+
         const cardLocation = document.createElement('p');
         cardLocation.classList.add('card-location');
-        cardLocation.textContent = LinkedRecord.location || '';
+        cardLocation.textContent = record.fields['Location'] || '';
+
+        const cardInPersonOrRemote = document.createElement('p');
+        cardInPersonOrRemote.classList.add('card-inPersonOrRemote');
+        cardInPersonOrRemote.textContent = record.fields['In Person / Remote'] || '';
+
+        const cardAge = document.createElement('p');
+        cardAge.classList.add('card-age');
+        cardAge.textContent = record.fields['Age'] || '';
+
+        const buttonWrapper = document.createElement('div');
+        buttonWrapper.classList.add('button-wrapper');
+
+        const firstButton = document.createElement('button');
+        firstButton.classList.add('card-button');
+        firstButton.textContent = 'Learn More';
+
+        const secondButton = document.createElement('button');
+        secondButton.classList.add('card-button');
+        secondButton.textContent = 'Apply Now';
+
+        // Add event listeners to the buttons
+        firstButton.addEventListener('click', () => {
+          // Handle first button click event here
+          window.location.href = 'LearnMore.html';
+
+        });
+
+        secondButton.addEventListener('click', () => {
+          // Handle second button click event here
+          window.location.href = 'https://example.com/another-page';
+        });
 
 
-        cardContent.appendChild(cardTitle);
-        cardContent.appendChild(cardOverview);
-        cardContent.appendChild(cardOrganization);
-        cardContent.appendChild(cardLocation);
+        buttonWrapper.appendChild(firstButton);
+        buttonWrapper.appendChild(secondButton);
 
-        cardDiv.appendChild(cardImage);
-        cardDiv.appendChild(cardContent);
+        contentColumn.appendChild(cardBodyInner);
+        cardBodyInner.appendChild(cardTitle);
+        cardBodyInner.appendChild(cardOrganization);
+        cardBodyInner.appendChild(cardOverview);
+        cardBodyInner.appendChild(cardLocation);
+        cardBodyInner.appendChild(cardAge);
+        cardBodyInner.appendChild(cardInPersonOrRemote);
+        cardBodyInner.appendChild(buttonWrapper);
+
+
+
+        rowDiv.appendChild(contentColumn);
 
         dataContainer.appendChild(cardDiv);
-   
+        
       });
+      
     })
       .catch(error =>{
         console.error('Error fetching linked records:', error);
       });
     })
-    .catch(error => {
-      console.error('Error fetching data:', error);
-    });
 }
 
-
-
-function fetchLinkedRecord(record) {
-  console.log('Record:', record);
+function fetchLinkedRecord(recordId) {
   // Fetch a linked record by its ID
-  const url = `https://api.airtable.com/v0/appVuPVt4NexTjNPj/Volunteer%20Service?filterByFormula=AND(Organization="${record.organization}", Location="${record.location}")`;
-
-
-  return fetch(url, {
+  return fetch(`https://api.airtable.com/v0/appVuPVt4NexTjNPj/Volunteer%20Service/${recordId}`, {
     headers: {
       'Authorization': 'Bearer keyhRdrFmvbRGMKRk',
       'Content-Type': 'application/json'
     }
-
-})
-.then(response => {
-  if (!response.ok) {
-    throw new Error('Unable to fetch linked record');
-  }
-  return response.json();
-})
-.then(data => {
-  console.log('Fetched LinkedRecord:', data);
-    /*
-    organization: data.fields['Organization'], // Replace 'Organization' with the actual field name
-    // Add more fields as needed
-    location: data.fields['Location']
-    */
-    if (data.records && data.records.length > 0) {
-      const linkedRecord = data.records[0];
-      const organization = linkedRecord.fields && linkedRecord.fields.Organization ? linkedRecord.fields.Organization : '';
-      const location = linkedRecord.fields && linkedRecord.fields.Location ? linkedRecord.fields.Location : '';
-
-      return {
-        organization: organization,
-        location: location
-      };
-    } 
-    else {
-      return {
-        organization: '',
-        location: ''
-      };
-    }
+  })
+  .then(response =>response.json())
+  .then(data=>{
+    console.log('Fetched LinkedRecord:', data);
+    return {
+      organization: data.fields['Organization'],
+      // Add more fields as needed
+    };
   });
 }
 
 
-
-
+/*
 function updateDataPeriodically(){
-  fetchData();
+  //fetchData();
+  setInterval(fetchData, 5000);
+
 }
+*/
+
+
