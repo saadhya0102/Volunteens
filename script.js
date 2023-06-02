@@ -35,6 +35,9 @@ const linkedRecordIds = data.records.map(record => {
 Promise.all(linkedRecordIds.map(recordId =>fetchLinkedRecord(recordId)))
   .then(linkedRecords =>{
     data.records.forEach((record,index)=> {
+      if (!record.fields.Organization) {
+        return; // Skip this iteration
+      }
       const LinkedRecord = linkedRecords[index];
       
 
@@ -129,7 +132,7 @@ Promise.all(linkedRecordIds.map(recordId =>fetchLinkedRecord(recordId)))
 
 
         rowDiv.appendChild(contentColumn);
-
+        console.log('Appending cardDiv:', cardDiv);
         dataContainer.appendChild(cardDiv);
         
       });
@@ -142,6 +145,10 @@ Promise.all(linkedRecordIds.map(recordId =>fetchLinkedRecord(recordId)))
 }
 
 function fetchLinkedRecord(recordId) {
+    if (!recordId) {
+    return Promise.resolve({});
+  }
+  
   // Fetch a linked record by its ID
   return fetch(`https://api.airtable.com/v0/appVuPVt4NexTjNPj/Volunteer%20Service/${recordId}`, {
     headers: {
