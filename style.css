@@ -67,8 +67,6 @@ header{
     margin: 0px 30px;
     transition: all 0.50s ease;
     text-decoration: none;
-
-
 }
 
 .navbar a:hover{
@@ -594,3 +592,110 @@ header{
         width: 100%;
     }
 }
+
+
+
+
+
+#learnMoreContainer{
+    position: relative;
+    min-height: 100vh;
+    padding: 50px 100px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+ }
+
+ .learn-more-header {
+    padding: 0 20px;
+    text-align: center;
+  }
+
+
+ #learnMoreContainer h3{
+    font-weight: 300;
+    padding-top: 100px;
+}
+
+ #learnMoreContainer h1{
+    font-size: 36px;
+     font-weight: 500;
+ }
+
+ #learnMoreContainer p{
+     font-weight: 300;
+ }
+
+
+ #learnMoreContainer button {
+    padding: 10px 20px;
+    background-color: var(--main-color);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  #learnMoreContainer button:hover {
+    background-color: #0056b3;
+  }
+
+  #learnMoreContainer hr {
+    margin: 20px 0;
+    border: none;
+    border-top: 10px solid #e91e63;
+    color: #e91e63;
+  }
+
+
+  .learn-more-container{
+    width: 100%;
+    display:  flex;
+    justify-content: center;
+    margin-top: 30px;
+ }
+
+  .learn-more-info{
+    width: 25%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin-right: 100px;
+ }
+
+  .learn-more-detail{
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+ }
+
+  .learn-more-info,
+  .learn-more-detail {
+    display: flex;
+    flex-direction: column;
+  }
+
+
+  
+  .learn-more-box {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  
+  .icon {
+    margin-right: 10px;
+  }
+  
+  .text {
+    margin: 0;
+  }
+  /* Adjust column sizes for smaller screens */
+  @media screen and (max-width: 768px) {
+    .learn-more-info,
+    .learn-more-detail {
+      width: 100%;
+    }
+  }
