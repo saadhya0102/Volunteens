@@ -203,14 +203,15 @@ header{
     margin-left: 5%;
   }
   
-.latter form{
+  .emailForm{
     width: 100%;
     max-width: 500px;
     position: relative;
     margin-left: 7%;
+    background:none;
 }
 
-.latter form input:first-child{
+#emailInput{
     display: inline-block;
     width:100%;
     outline: none;
@@ -219,14 +220,14 @@ header{
     border-radius: 30px;
 }
 
-.latter form input:last-child{
+.submitButton{
     position: absolute;
     display: inline-block;
     border:none;
-    outline: non;
+    outline: none;
     background:#E74646;
     color:#FFF3E2;
-    padding: 16px 40px;
+    padding: 16px 30px;
     border-radius: 30px;
     cursor: pointer;
     top: 2px;
