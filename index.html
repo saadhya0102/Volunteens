@@ -18,43 +18,13 @@
         <script src="https://apis.google.com/js/api.js"></script>
 
         <script src="script.js"></script>
-        <script>
-        function saveEmail(event) {
-            event.preventDefault();
-            var email = document.getElementById("emailInput").value;
-
-            fetch('http://127.0.0.1:3000/index.html', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ email: email })
-            })
-            .then(response => {
-                if (response.ok) {
-                    alert("Email saved successfully!");
-                } else {
-                    alert("An error occurred. Please try again later.");
-                }
-            })
-            .catch(error => {
-                alert("An error occurred. Please try again later.");
-                console.error('Error:', error);
-            });
-        }
-
-        window.onload = function() {
-            var form = document.querySelector('form');
-            form.addEventListener('submit', saveEmail);
-        };
-    </script>
     </head>
     <body>
         <header>
             <a href="#" class="logo"><i class="ri-home-heart-line"></i><span>Logo</span></a>
             <ul class ="navbar">
                 <li><a href = "index.html">About Us</a></li>
-                <li><a href = "Volunteer.html">Volunteer Opportunity</a></li> 
+                <li><a href = "Volunteer.html">Volunteer Opportunity</a></li>
                 <li><a href = "ContactUs.html">Contact</a></li>
             </ul>
 
@@ -63,9 +33,6 @@
                 <div class = "bx bx-menu" id="menu-icon" ><i class="fa-solid fa-bars"></i></div>
             </div>
         </header>
-            <!-- js link-->
-                
-            <!--introduction-->
 
         <div class = "row">
             <div class = "col-1">
@@ -73,11 +40,16 @@
                     <p class = "description">
                         We empower students to explore their passions, develop valuable skills, and contribute to their communities, fostering a sense of purpose and making a positive impact on their personal growth and the world around them.
                     </p>
-                    <div class = "latter">
-                    <form onsubmit="saveEmail(event)">
-                        <input type="email" id="emailInput" placeholder="Enter Your Email" required>                        
-                        <input type="submit" id="submitButton" value="Let's Start" required>
-                    </form>
+                    <div class = "contactForm">
+                        <form action="https://formsubmit.co/contactvolunteens@gmail.com" method="POST">
+                            <div class = "inputBox">
+                                <input type = "text" name = "Email" required = "required" placeholder="Enter Your Email">
+                            </div>
+                            <div class = "imputBox">
+                                <input type = "submit" name = "" value = "Join our Mailing List">
+                            </div>
+
+                        </form>
                     </div>
             </div>
             <div class = "col-2">
@@ -111,4 +83,3 @@
 
     </body>
 </html>
-
