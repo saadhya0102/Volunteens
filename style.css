@@ -399,6 +399,108 @@ header{
  }
 
 
+ .vision-heading {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    margin: 20px auto;
+ }
+ .vision-heading h1 {
+    font-size: 50px;
+    color:#000;
+    margin-bottom: 25px;
+    position: relative;
+ }
+
+
+ .vision-heading h1::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    display: block;
+    margin: 0 auto;
+    background-color: red;
+ }
+
+
+ .container{
+    display: flex;
+    width: 90%;
+    margin: 0 auto;
+    padding: 10px 20px;
+ }
+ 
+ .vision{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+ }
+
+ .vision_img{
+    overflow: hidden;
+    margin-left: 10px;
+ }
+
+ .vision_img img{
+    width: 50%;
+    height: auto;
+    display: block;
+    transition: 0.5s ease;
+    border-radius: 25px ;
+    float: left;
+ }
+
+ .vision_content{
+    flex: 1;
+    text-align: justify;
+    margin-left: -200px;
+    float: left;
+ }
+
+ .vision_content h2{
+    font-size: 23px;
+    margin-bottom: 15px;
+ }
+
+ .vision_content p{
+    font-size: 18px;
+    line-height: 1.5;
+ }
+
+
+@media (max-width: 1200px){
+    .vision-heading{
+        padding: 0px 20px;
+    }
+    .container{
+        padding: 0px;
+    }
+
+
+    .vision{
+        padding: 20px;
+        flex-direction: column;
+    }
+
+
+    .vision_img{
+        margin-bottom: 20px;
+        margin-left: 150px;
+        margin-right: 10px;
+    }
+
+
+    .vision_content{
+        margin-left: 20px;
+    }
+}
+
+
 
  .card-image{
     max-width: 60%;
