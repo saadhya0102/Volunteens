@@ -481,6 +481,32 @@ header{
     font-size: 14px;
  }
 
+ .card-button{
+    background: #FF4742;
+    border: 1px solid #FF4742;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 16px;
+    min-height: 40px;
+    outline: 0;
+    padding: 12px 14px;
+    text-align: center;
+    text-rendering: geometricprecision;
+    text-transform: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+
+ }
+
  #dataList{
     display: flex;
     flex-wrap: wrap;
@@ -756,4 +782,28 @@ header{
     .learn-more-detail {
       width: 100%;
     }
+  }
+
+  .card-organization, .card-overview, .card-location, .card-age, .card-inPersonOrRemote{
+    font-size: large;
+  }
+
+  .card-title{
+    font-size: x-large;
+  }
+
+  @media screen and (min-width: 768px) {
+    .card-image{
+        height: 200px;
+        width: 400px;
+        position: relative;
+        left: 70px;}
+  }
+
+  @media screen and (max-width: 768px) {
+    .card-image{
+        height: 200px;
+        width: auto;
+        position: relative;
+        left: 110px;}
   }
