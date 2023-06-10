@@ -784,6 +784,14 @@ header{
     }
   }
 
+  /*Navbar Size Adjustment*/
+  .navbar{
+    width: 90%;
+    position: absolute;
+    left: 5%;
+    height: 205%;
+  }
+
   .card-organization, .card-overview, .card-location, .card-age, .card-inPersonOrRemote{
     font-size: large;
   }
