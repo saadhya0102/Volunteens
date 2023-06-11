@@ -135,7 +135,7 @@ header{
         right: 0rem;
         width: 100%;
         top: 100%;
-        height: 25vh;
+        height: 28vh;
         background: #FA9884;
         display: flex;
         flex-direction: column;
@@ -657,8 +657,10 @@ header{
   }
   
   .card-image {
-    max-width: 300px;
+    max-width: 325px;
     height: auto;
+    margin-left: 15%;
+    position: center;
   }
   
   .card-title {
@@ -1018,34 +1020,49 @@ header{
     }
   }
 
-<<<<<<< HEAD
-=======
-  /*Navbar Size Adjustment*/
+  /*Navbar Size Adjustment
   .navbar{
     width: 90%;
     position: absolute;
     left: 5%;
     height: 205%;
   }
-
+*/
+/*
   .card-organization, .card-overview, .card-location, .card-age, .card-inPersonOrRemote{
     font-size: large;
   }
->>>>>>> a4a1dc2149e6a0c5107c98ad7609001718e06778
+  */
 
 
-  @media screen and (min-width: 768px) {
+  @media (max-width: 1400px) {
     .card-image{
-        width: 400px;
+        width: 300px;
         height:auto;
         position: relative;
-        left: 70px;}
+        
+    }
   }
 
-  @media screen and (max-width: 768px) {
+  @media (max-width: 1200px) {
     .card-image{
-        height: 200px;
-        width: auto;
+        width: 250px;
+        height:auto;
         position: relative;
-        left: 110px;}
+    }
+
+    #volunteer_heading{
+        margin-left:0;
+        margin-right:0;
+        text-align:center;
+        margin-top: 100px;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .card-image{
+        width: 200px;
+        height: auto;
+        position: relative;
+    }
   }
