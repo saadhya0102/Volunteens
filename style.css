@@ -1018,6 +1018,20 @@ header{
     }
   }
 
+<<<<<<< HEAD
+=======
+  /*Navbar Size Adjustment*/
+  .navbar{
+    width: 90%;
+    position: absolute;
+    left: 5%;
+    height: 205%;
+  }
+
+  .card-organization, .card-overview, .card-location, .card-age, .card-inPersonOrRemote{
+    font-size: large;
+  }
+>>>>>>> a4a1dc2149e6a0c5107c98ad7609001718e06778
 
 
   @media screen and (min-width: 768px) {
