@@ -38,7 +38,8 @@ function displayRecordData(record) {
 
     secondButton.addEventListener('click', () => {
       // Handle second button click event here
-      window.location.href = 'https://example.com/another-page';
+      const applicationLink = record.fields['Application Form']; 
+      window.open(applicationLink, '_blank'); // Open the link in a new tab
     });
 
 

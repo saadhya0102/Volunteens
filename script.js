@@ -38,7 +38,7 @@ function fetchDataCard() {
 
 function createCardDiv(record) {
   const cardDiv = document.createElement('div');
-  cardDiv.classList.add('col-12');
+  cardDiv.classList.add('col-12','custom-card');
 
   const cardBody = document.createElement('div');
   cardBody.classList.add('card', 'mb-3');
@@ -107,7 +107,8 @@ function createCardDiv(record) {
 
   secondButton.addEventListener('click', () => {
     // Handle second button click event here
-    window.location.href = 'https://example.com/another-page';
+    const applicationLink = record.fields['Application Form']; 
+    window.open(applicationLink, '_blank'); // Open the link in a new tab
   });
 
   buttonWrapper.appendChild(firstButton);
