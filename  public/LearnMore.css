@@ -1,0 +1,159 @@
+#learnMoreContainer{
+    position: relative;
+    min-height: 100vh;
+    padding: 50px 100px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    color: black;
+
+ }
+
+ .learn-more-header {
+    padding: 0 20px;
+    text-align: center;
+  }
+
+
+ #learnMoreContainer h3{
+    font-weight: 300;
+    padding-top: 100px;
+}
+
+ #learnMoreContainer h1{
+    font-size: 36px;
+     font-weight: 500;
+ }
+
+ #learnMoreContainer label{
+    font-weight: 300;
+    font-size: 20px;
+}
+ #learnMoreContainer p{
+     font-weight: 300;
+     font-size: 15px;
+ }
+
+ #learnMoreContainer .icon{
+    color: #E74646;
+}
+
+
+ #learnMoreContainer button {
+    padding: 10px 20px;
+    background-color: var(--main-color);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  #learnMoreContainer button:hover {
+    background-color: #0056b3;
+  }
+
+  #learnMoreContainer hr {
+    margin: 20px 0;
+    border: none;
+    border-top: 10px solid #e40d0d;
+    color: #e40d0d;
+  }
+
+
+  .learn-more-container{
+    width: 100%;
+    display:  flex;
+    justify-content: center;
+    margin-top: 30px;
+ }
+
+  .learn-more-info{
+    width: 25%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin-right: 100px;
+ }
+
+  .learn-more-detail{
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+ }
+
+  .learn-more-info,
+  .learn-more-detail {
+    display: flex;
+    flex-direction: column;
+  }
+
+
+  
+  .learn-more-box {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  
+  .icon {
+    margin-right: 10px;
+  }
+  
+  .text {
+    margin: 0;
+  }
+  /* Adjust column sizes for smaller screens */
+  @media screen and (max-width: 768px) {
+    .learn-more-info,
+    .learn-more-detail {
+      width: 100%;
+    }
+  }
+
+  /*Navbar Size Adjustment
+  .navbar{
+    width: 90%;
+    position: absolute;
+    left: 5%;
+    height: 205%;
+  }
+*/
+/*
+  .card-organization, .card-overview, .card-location, .card-age, .card-inPersonOrRemote{
+    font-size: large;
+  }
+  */
+
+
+  @media (max-width: 1400px) {
+    .card-image{
+        width: 300px;
+        height:auto;
+        position: relative;
+        
+    }
+  }
+
+  @media (max-width: 1200px) {
+    .card-image{
+        width: 250px;
+        height:auto;
+        position: relative;
+    }
+
+    #volunteer_heading{
+        margin-left:0;
+        margin-right:0;
+        text-align:center;
+        margin-top: 100px;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .card-image{
+        width: 200px;
+        height: auto;
+        position: relative;
+    }
+  }
