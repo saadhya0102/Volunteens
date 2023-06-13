@@ -102,7 +102,7 @@ function createCardDiv(record) {
   // Add event listeners to the buttons
   firstButton.addEventListener('click', () => {
     // Handle first button click event here
-    window.location.href = `learnMore.html?id=${record.id}`;
+    window.location.href = `LearnMore.html?id=${record.id}`;
   });
 
   secondButton.addEventListener('click', () => {
