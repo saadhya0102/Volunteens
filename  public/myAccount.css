@@ -1,115 +1,212 @@
-body{
+.container{
+    height: 100vh;
+    width: 100%;
     display: flex;
-    justify-content:center;
+    align-items: center;
+    justify-content: center;
+    column-gap: 30px;
 }
-
-.login{
+.form{
     position: absolute;
-    top: 20%;
-    transform: translate (-50%, -50%);
-    padding: 40px;
-    color: white;
-    background-color: #FA9884;
-    border-radius: 5px;
+    max-width: 430px;
+    width: 100%;
+    padding: 30px;
+    border-radius: 6px;
+    background: #FFF;
+    margin-top: 100px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+
 }
 
-.userHeader {
-    font-size: 48px; /* Adjust the value to make the icon bigger */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 10px;
-    color: white;
-  }
+.form.signup{
+    opacity: 0;
+    pointer-events: none;
+    margin-top: 250px;
+}
+.forms.show-signup .form.signup{
+    opacity: 1;
+    pointer-events: auto;
+}
+.forms.show-signup .form.login{
+    opacity: 0;
+    pointer-events: none;
+}
 
-  .field{
-    border: 2px solid white;
-    border-radius: 50px;
-    background-color: transparent;
-    width: 100%;
-    margin-bottom: 15px;
-    display: flex;
-  }
-
-  .field span{
-    color: white;
-    width: 40px;
-    line-height: 45px;
+h3{
+    font-size: 28px;
+    font-weight: 600;
+    color: #232836;
     text-align: center;
-  }
+}
 
-  .field input{
+form{
+    margin-top: 30px;
+}
+.form .field{
+    position: relative;
+    height: 50px;
     width: 100%;
-    height: 45px;
-    font-size: 1.1rem;
-    padding: 5px;
-    color: white;
-    background-color: transparent;
+    margin-top: 20px;
+    border-radius: 6px;
+}
+
+.field input,
+.field button{
+    height: 100%;
+    width: 100%;
     border: none;
-  }
+    font-size: 16px;
+    font-weight: 400;
+    border-radius: 6px;
+}
+.field input{
+    outline: none;
+    padding: 0 15px;
+    border: 1px solid#CACACA;
+}
+.field input:focus{
+    border-bottom-width: 2px;
+}
 
-  .forgot-password a{
-    color: white;
-    text-decoration: none;
-  }
-
-  .forgot-password a:hover{
-    text-decoration: underline;
-  }
-
-  .submit{
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    height: 45px;
-    margin-bottom: 25px;
-    font-size: 1.2rem;
-    color: black;
-    background: white;
-    border: 1px solid white;
-    border-radius: 125px;
-  }
-
-  .submit:hover{
+.fa-solid.fa-eye-slash{
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #8b8b8b;
     cursor: pointer;
-    background-color: #E74646;
-    color: white;
-  }
+    padding: 5px;
+}
+.field button{
+    color: #fff;
+    background-color: #FA9884;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+.field button:hover{
+    background-color: #FA9884;
+}
 
-  .login-form-copy{
-    margin-bottom: 15px;
-  }
-
-  .login-form_sign-up{
+.form-link{
+    text-align: center;
+    margin-top: 10px;
+}
+.form-link span,
+.form-link a{
+    font-size: 14px;
+    font-weight: 400;
+    color: #232836;
+}
+.form a{
+    color: #FA9884;
     text-decoration: none;
-    color: black;
-  }
+}
+.form-content a:hover{
+    text-decoration: underline;
+}
 
-  .social-icons{
-    display: flex;
+.line{
+    position: relative;
+    height: 1px;
     width: 100%;
-    justify-content: space-around;
-    padding-bottom: 5px;
-  }
+    margin: 36px 0;
+    background-color: #d4d4d4;
+}
+.line::before{
+    content: 'Or';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #FFF;
+    color: #8b8b8b;
+    padding: 0 15px;
+}
 
-  .social-icon{
+.media-options a{
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.4rem;
-    width: 50px;
-    height: 50px;
+}
+a.facebook{
+    color: #fff;
+    background-color: #FA9884;
+}
+a.facebook .icon{
+    height: 28px;
+    width: 28px;
+    color: #0171d3;
+    font-size: 20px;
     border-radius: 50%;
-    cursor: pointer; 
-    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+}
+
+#facebook-icon,
+img.google-img{
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+}
+img.google-img{
+    height: 20px;
+    width: 20px;
+    object-fit: cover;
+}
+a.google{
+    border: 1px solid #CACACA;
+}
+
+a.google span{
+    font-weight: 500;
+    opacity: 0.6;
+    color: #232836;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    position: relative;
+    margin-top: 15px;
   }
 
-  .facebook{
-    background-color: #385998;
+label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 7px;
+  }
+
+.form-group input,
+.form-group select {
+    height: 45px;
+    padding: 10px;
+    width: 100%;
+    font-size: 15px;
+    outline: none;
+    background: #fff;
+    border-radius: 3px;
+    border: 1px solid #CACACA;
   }
 
 
+ .form-group input:focus,
+ .form-group select:focus {
+  border-color: #CACACA;
+}
+@media (max-width: 420px){
+    .form{
+        padding: 20px 10px;
+        margin-top: -15px;
+    }
+}
 
-  .google{
-    background-color: #CA3224;
-  }
+@media (max-width: 800px){
+    .form{
+        padding: 20px 10px;
+        margin-top: 100px;
+    }
+}
+
