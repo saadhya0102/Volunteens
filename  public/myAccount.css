@@ -1,0 +1,115 @@
+body{
+    display: flex;
+    justify-content:center;
+}
+
+.login{
+    position: absolute;
+    top: 20%;
+    transform: translate (-50%, -50%);
+    padding: 40px;
+    color: white;
+    background-color: #FA9884;
+    border-radius: 5px;
+}
+
+.userHeader {
+    font-size: 48px; /* Adjust the value to make the icon bigger */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    color: white;
+  }
+
+  .field{
+    border: 2px solid white;
+    border-radius: 50px;
+    background-color: transparent;
+    width: 100%;
+    margin-bottom: 15px;
+    display: flex;
+  }
+
+  .field span{
+    color: white;
+    width: 40px;
+    line-height: 45px;
+    text-align: center;
+  }
+
+  .field input{
+    width: 100%;
+    height: 45px;
+    font-size: 1.1rem;
+    padding: 5px;
+    color: white;
+    background-color: transparent;
+    border: none;
+  }
+
+  .forgot-password a{
+    color: white;
+    text-decoration: none;
+  }
+
+  .forgot-password a:hover{
+    text-decoration: underline;
+  }
+
+  .submit{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 45px;
+    margin-bottom: 25px;
+    font-size: 1.2rem;
+    color: black;
+    background: white;
+    border: 1px solid white;
+    border-radius: 125px;
+  }
+
+  .submit:hover{
+    cursor: pointer;
+    background-color: #E74646;
+    color: white;
+  }
+
+  .login-form-copy{
+    margin-bottom: 15px;
+  }
+
+  .login-form_sign-up{
+    text-decoration: none;
+    color: black;
+  }
+
+  .social-icons{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    padding-bottom: 5px;
+  }
+
+  .social-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer; 
+    margin-bottom: 25px;
+  }
+
+  .facebook{
+    background-color: #385998;
+  }
+
+
+
+  .google{
+    background-color: #CA3224;
+  }

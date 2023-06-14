@@ -1,6 +1,9 @@
-const regbtn = document.getElementById('reg-btn');
-
-regbtn.addEventListener('click',function(){
-    document.getElementById('register-div').style.display="inline";
-    document.getElementById('login-div').style.display="none";
-});
+function menu() {
+    const menuIcon = document.getElementById('menu-icon');
+    const navbar = document.querySelector('.navbar');
+  
+    menuIcon.addEventListener('click', function() {
+      menuIcon.classList.toggle('bx-x');
+      navbar.classList.toggle('open');
+    });
+  }
