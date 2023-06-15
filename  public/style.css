@@ -8,15 +8,7 @@
     list-style: none;
     box-sizing: border-box;
 }
-.logo {
-    display: flex;
-    align-items: center;
-  }
-  
-  .logo-img {
-    height: 100px !important;
-    margin-right: 10px;
-  }
+
 :root{
     --bg-color: #FFF3E2;
     --text-color: #E74646;
