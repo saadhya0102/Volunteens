@@ -10,7 +10,7 @@ function menu() {
 
 function fetchRecordById(recordId) {
     // Fetch the specific record from Airtable based on the ID
-    return fetch(`https://api.airtable.com/v0/appVuPVt4NexTjNPj/Roles/${recordId}`, {
+    return fetch(`https://api.airtable.com/v0/appVuPVt4NexTjNPj/Volunteer Opportunity/${recordId}`, {
       headers: {
         'Authorization': 'Bearer keyhRdrFmvbRGMKRk',
         'Content-Type': 'application/json'
