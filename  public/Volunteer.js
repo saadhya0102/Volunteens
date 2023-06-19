@@ -28,7 +28,13 @@ function fetchDataCard() {
         const cardDiv = createCardDiv(record);
         dataContainer.appendChild(cardDiv);
       });
-    })
+
+      const modalityFilter = document.getElementById('modalityFilter');
+            modalityFilter.addEventListener('change', () => {
+              filterModality(data.records);
+            });
+          })
+
     .catch(error => {
       console.error('Error fetching data:', error);
     });
@@ -66,7 +72,7 @@ function createCardDiv(record) {
 
   const cardTitle = document.createElement('h3');
   cardTitle.classList.add('card-title');
-  cardTitle.textContent = record.fields['Name'] || '';
+  cardTitle.textContent = record.fields['Name of Volunteer Opportunity'] || '';
 
   const cardOrganization = document.createElement('p');
   cardOrganization.classList.add('card-organization');
@@ -125,6 +131,38 @@ function createCardDiv(record) {
 
   rowDiv.appendChild(contentColumn);
 
+
   return cardDiv;
 }
 
+function filterModality(records) {
+  const modalityFilter = document.getElementById('modalityFilter');
+  const filterCriteria = modalityFilter.value.toLowerCase();
+
+  // Filter the records based on the selected filter criteria
+  const filteredRecords = records.filter(record => {
+    const inPersonOrRemote = String(record.fields['In Person / Remote']).toLowerCase();
+    return filterCriteria === 'all' || inPersonOrRemote === filterCriteria;
+  });
+
+
+
+  // Create a document fragment to build the filtered data cards
+  const fragment = document.createDocumentFragment();
+
+  // Generate cards with filtered data
+  filteredRecords.forEach(record => {
+    const cardDiv = createCardDiv(record);
+    fragment.appendChild(cardDiv);
+  });
+
+  // Clear the data container
+  const dataContainer = document.getElementById('dataList');
+  dataContainer.textContent = '';
+
+  // Append the fragment to the data container
+  dataContainer.appendChild(fragment);
+
+  console.log('Filtered Records:', filteredRecords);
+  console.log('Data Container:', dataContainer);
+}
