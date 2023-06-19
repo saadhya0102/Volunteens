@@ -21,7 +21,7 @@
 .form.signup{
     opacity: 0;
     pointer-events: none;
-    margin-top: 250px;
+    margin-top: 360px;
 }
 .forms.show-signup .form.signup{
     opacity: 1;
@@ -80,12 +80,12 @@ form{
 }
 .field button{
     color: #fff;
-    background-color: #FA9884;
+    background-color: #FF6969;
     transition: all 0.3s ease;
     cursor: pointer;
 }
 .field button:hover{
-    background-color: #FA9884;
+    background-color: #FF6969;
 }
 
 .form-link{
@@ -99,7 +99,7 @@ form{
     color: #232836;
 }
 .form a{
-    color: #FA9884;
+    color: #FF6969;
     text-decoration: none;
 }
 .form-content a:hover{
@@ -131,7 +131,7 @@ form{
 }
 a.facebook{
     color: #fff;
-    background-color: #FA9884;
+    background-color: #FF6969;
 }
 a.facebook .icon{
     height: 28px;

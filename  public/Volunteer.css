@@ -1,7 +1,7 @@
 /* Volunteer page design*/
 
 .filterContainer {
-  display: flex;
+  display: inline-block;
   align-items: center;
   margin-bottom: 20px;
   margin-left: 50px;

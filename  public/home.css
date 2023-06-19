@@ -4,7 +4,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #FF4742;
+    background-color: #FF6969;
     clip-path: circle(700px at right 800px);
     transition: all 0.50s ease;
     z-index: -1;

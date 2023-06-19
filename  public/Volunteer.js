@@ -24,16 +24,48 @@ function fetchDataCard() {
       const dataContainer = document.getElementById('dataList');
       dataContainer.innerHTML = '';
 
+      let filteredData = data.records; // Initial data is unfiltered
+      console.log('Initial data:', filteredData);
+
+
+      // Render the initial cards
+      filteredData.forEach(record => {
+        const cardDiv = createCardDiv(record);
+        dataContainer.appendChild(cardDiv);
+      });
+
+      // Add event listeners to the filters
+      const filters = document.querySelectorAll('.filterContainer select');
+      filters.forEach(filter => {
+        filter.addEventListener('change', () => {
+          filteredData = filterData(data.records);
+          console.log('Filtered data:', filteredData);
+          renderFilteredData(filteredData);
+        });
+      });
+
+      const ageFilter = document.getElementById('ageFilter');
+      ageFilter.addEventListener('input', () => {
+        filteredData = filterData(data.records);
+        console.log('Filtered data:', filteredData);
+        renderFilteredData(filteredData);
+      });
+    })
+
+/*
       data.records.forEach(record => {
         const cardDiv = createCardDiv(record);
         dataContainer.appendChild(cardDiv);
       });
 
+      
       const modalityFilter = document.getElementById('modalityFilter');
             modalityFilter.addEventListener('change', () => {
               filterModality(data.records);
             });
           })
+        */
+
 
     .catch(error => {
       console.error('Error fetching data:', error);
@@ -134,7 +166,7 @@ function createCardDiv(record) {
 
   return cardDiv;
 }
-
+/*
 function filterModality(records) {
   const modalityFilter = document.getElementById('modalityFilter');
   const filterCriteria = modalityFilter.value.toLowerCase();
@@ -166,3 +198,46 @@ function filterModality(records) {
   console.log('Filtered Records:', filteredRecords);
   console.log('Data Container:', dataContainer);
 }
+
+*/
+
+function filterData(records) {
+  const modalityFilter = document.getElementById('modalityFilter');
+  const typeFilter = document.getElementById('typeFilter');
+  const ageFilter = document.getElementById('ageFilter');
+
+
+  const modalityCriteria = modalityFilter.value;
+  const typeCriteria = typeFilter.value;
+  const ageCriteria = parseInt(ageFilter.value);
+
+
+  // Filter the records based on the selected filter criteria
+  const filteredRecords = records.filter(record => {
+    const modality = record.fields['In Person / Remote'] || '';
+    const type = record.fields['Type of Volunteer Work'] || '';
+    const age = parseInt(record.fields['Minimum Age'] || 0);
+
+    // Check if the record matches the selected filter criteria
+    const modalityMatch = modalityCriteria === '' || modality === modalityCriteria;
+    const typeMatch = typeCriteria === '' || type === typeCriteria;
+    const ageMatch = isNaN(ageCriteria) || (ageCriteria === 0 && age === 0) || (ageCriteria > 0 && age <= ageCriteria);
+
+    return modalityMatch && typeMatch && ageMatch;
+  });
+    return filteredRecords;
+}
+
+  function renderFilteredData(filteredData) {
+    const dataContainer = document.getElementById('dataList');
+    dataContainer.innerHTML = '';
+  
+    // Render the filtered cards
+    filteredData.forEach(record => {
+      const cardDiv = createCardDiv(record);
+      dataContainer.appendChild(cardDiv);
+    });
+  }
+  
+  // Call fetchDataCard to start fetching and rendering data
+  fetchDataCard();
