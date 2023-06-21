@@ -1,0 +1,27 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.thank_you_message {
+    font-size: xx-large;
+    width: 50%;
+    text-align: center;
+}
+
+.glow {
+    color: white;
+    font-size: 2em;
+    text-align: center;
+    text-shadow: 0 0 10px #FF8C00, 0 0 20px #FF8C00, 0 0 30px #FF8C00, 0 0 40px #FF8C00;
+}
+
+
+
+.logo{
+    color: #E74646;
+}
