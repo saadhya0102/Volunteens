@@ -413,6 +413,13 @@
     line-height: 1.5;
  }
 
+.mission_content,.vision_content{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 100;
+    font-size: 18px;
+    line-height: 1.5;
+ }
+
 
 @media (max-width: 1200px){
 
