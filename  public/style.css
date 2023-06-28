@@ -957,9 +957,10 @@ header {
 
 .contactForm .inputBox {
     position: relative;
-    width: 100%;
+    width: calc(100% - 100px); 
     margin-top: 10px;
 }
+
 
 .contactForm .inputBox input,
 .contactForm .inputBox textarea {
@@ -1276,6 +1277,28 @@ header {
         margin-bottom: 450px;
     }
 }
+
+@media (max-width: 420px){
+
+    #emailInput {
+        margin-left: 40px;
+    }
+
+    .inputBox .submitButton {
+        margin-top: 70px;
+    }
+    .inputBox .submitButton {
+        padding-left: 11px;
+        padding-right: 7px;
+    }
+    .about1 {
+        display: none;
+    }
+}
+
+
+
+
 
 
 
