@@ -34,7 +34,7 @@ function displayRecordData(record) {
     
 
     const nameValue = document.createElement('h1');
-    nameValue.textContent = record.fields['Name'] || '';
+    nameValue.textContent = record.fields['Name of Volunteer Opportunity'] || '';
   
     const organizationValue = document.createElement('h3');
     organizationValue.textContent = record.fields['Organization'] || '';

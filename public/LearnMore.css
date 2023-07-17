@@ -151,6 +151,7 @@
   }
 
   @media (max-width: 420px) {
+
     .card-image{
         width: 200px;
         height: auto;

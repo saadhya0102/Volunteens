@@ -137,6 +137,12 @@ function createCardDiv(record) {
   secondButton.classList.add('card-button');
   secondButton.textContent = 'Apply Now';
 
+  // const secondButton = document.createElement('button');
+  // secondButton.classList.add('card-button');
+  // secondButton.textContent = 'Apply Now';
+
+  
+
   // Add event listeners to the buttons
   firstButton.addEventListener('click', () => {
     // Handle first button click event here
@@ -148,6 +154,15 @@ function createCardDiv(record) {
     const applicationLink = record.fields['Application Form']; 
     window.open(applicationLink, '_blank'); // Open the link in a new tab
   });
+
+  // Add event listener to the button
+  // secondButton.addEventListener('click', () => {
+  //   // Handle second button click event here
+  //   const applicationLink = record.fields['Application Form'];
+  //   const formContainer = document.createElement('div');
+  //   formContainer.innerHTML = `<iframe src="${applicationLink}" width="100%" height="600px" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>`;
+  //   cardDiv.appendChild(formContainer);
+  // });
 
   buttonWrapper.appendChild(firstButton);
   buttonWrapper.appendChild(secondButton);

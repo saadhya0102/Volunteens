@@ -90,7 +90,8 @@ loginForm.addEventListener('submit', (e) => {
       const user = userCredential.user;
       const userId = user.uid;
       alert(user.email+" Login successfully!!!");
-      window.location.href = 'User.html'; 
+      // window.location.href = 'User.html'; 
+      window.location.href = `User.html?userId=${userId}`;
 
 
 
@@ -206,7 +207,7 @@ document.getElementById("google-login").addEventListener("click", function() {
               })
                 .then((response) => {
                   console.log('Last login time updated in Airtable:', response.data);
-                  window.location.href = 'User.html';
+                  window.location.href = `User.html?userId=${userCredential.user.uid}`;
                 })
                 .catch((error) => {
                   console.error('Error updating last login time in Airtable:', error.message);
@@ -235,7 +236,7 @@ document.getElementById("google-login").addEventListener("click", function() {
               })
                 .then((response) => {
                   console.log('New user information saved to Airtable:', response.data);
-                  window.location.href = 'User.html';
+                  window.location.href = `User.html?userId=${userCredential.user.uid}`;
                 })
                 .catch((error) => {
                   if (error.response && error.response.data) {

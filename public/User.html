@@ -11,7 +11,7 @@
 
         gtag('config', 'G-5N1KKBS8Y7');
         </script>
-        <title>Volunteer Opportunity</title>
+        <title>User Dashboard</title>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -21,11 +21,18 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+        <!-- <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'> -->
+        <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+
+
+
         <!--Bootstrap-->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
         <link rel = "stylesheet" href = "style.css"/>
         <link rel="stylesheet" href="User.css"/>
-        <script src="About.js"></script>
+        <script src="https://apis.google.com/js/api.js"></script>
+        <script src="User.js"></script>
         
         <!--logo-->
         <link rel="icon" href="Pictures/logo.PNG" type="image/x-icon">
@@ -44,14 +51,128 @@
                 <li><a href = "myAccount.html">My Account</a></li>
             </ul>
 
-            <div class = "main">
-                <div class = "bx bx-menu" id="menu-icon" ><i class="fa-solid fa-bars"></i></div>
-            </div>
+               <div class = "bx bx-menu" id="menu-icon" ></div>
         </header>
 
+        <section id="sidebar">
+            <a href="#" class="brand">
+                <span class="text">My Account</span>
+                <i class='bx bx-menu' ></i>
+            </a>
 
-        <h3 id="User_Heading">User Page</h3>
-        <p>Welcome, User!</p>
+            <ul class="side-menu top">
+                <li class="divider" data-text="overviw">Overview</li>
+                <li class="active">
+                    <a href="#" data-section="overview-manage">
+                        <i class='bx bxs-dashboard' ></i>
+                        <span class="text">Manage Volunteers</span>
+                    </a>
+                </li>
+                <li class="divider" data-text="volunteers">Volunteer Status</li>
+                <li>
+                    <a href="#" data-section="status-considering">
+                        <i class='bx bx-hourglass'></i>                       
+                         <span class="text">Considering</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-section="status-applied">
+                        <i class='bx bxs-hourglass-top' ></i>                        
+                        <span class="text">Applied</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-section="status-current">
+                        <i class='bx bxs-hourglass' ></i>                        
+                        <span class="text">Current</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-section="status-past">
+                        <i class='bx bxs-hourglass-bottom' ></i>                        
+                        <span class="text">Past</span>
+                    </a>
+                </li>
+                
+                <li class="divider" data-text="setting">Settings</li>
+                <li>
+                    <a href="#" data-section="setting-profile">
+                        <i class='bx bxs-cog'></i>                        
+                        <span class="text">Account Settings</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-section="setting-help">
+                        <i class='bx bxs-help-circle' ></i>                        
+                        <span class="text">Help & Support</span>
+                    </a>
+                </li>
+            </ul>
+            <a href="#" class="btn-logout">Log Out</a>
+
+        </section>
+        <!-- SIDEBAR -->
+
+        <section id="content">
+                    <section id="overview-manage" class="active">
+                        <h2>Volunteer Overview</h2>
+                        <table id="volunteer-table">
+                            <thead>
+                                <tr>
+                                    <th>Volunteer Name</th>
+                                    <th>Organizaion</th>
+                                    <th>Type</th>
+                                    <th>Application Submission Date</th>
+                                    <th>Volunteer Start Time</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Table rows will be dynamically generated -->
+                            </tbody>
+                        </table>
+                        <!-- Content for Overview section -->
+                    </section>
+        
+                    <section id="status-considering">
+                        <h2>Favorites</h2>
+
+                        <!-- Content for Current section -->
+                    </section>
+                      
+                    <section id="status-applied">
+                        <h2>Applied</h2>
+
+                        <!-- Content for Applied section -->
+                    </section>
+                      
+                    <section id="status-current">
+                        <h2>Current Volunteer</h2>
+
+                        <!-- Content for Past Volunteer section -->
+                    </section>
+                      
+                    <section id="status-past">
+                        <h2>Past Volunteer</h2>
+                        <!-- Content for Thinking Applying section -->
+                    </section>
+        
+                    <section id="setting-profile">
+                        <h2>Your Account Setting</h2>
+                        <!-- User profile data will be populated here -->
+                    </section>
+
+                    <section id="setting-help">
+                        <h2>Help</h2>
+                        <!-- User volunteer data will be populated here -->
+                    </section>
+
+                </section>
+
+      
         <script>menu()</script>
-    </body>
+        <script>active()</script>    
+        <script>sidebarMenu()</script>    
+
+          </body>
 </html>
