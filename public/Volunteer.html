@@ -65,7 +65,12 @@
                   </div>
                 <div id="dataList" class="container"></div>
             -->
-
+            <!-- Add this div for the loading spinner -->
+            <div id="loadingSpinner" class="loading-container">
+                <div class="loading-spinner"></div>
+                <!-- You can also add a loading message here if desired -->
+            </div>
+  
             <div class="filterContainer">
                 <label for="modalityFilter">Modality:</label>
                 <select id="modalityFilter">
@@ -91,15 +96,22 @@
                 <input type="number" id="ageFilter" min="0" step="1" value="">
               </div>
             <div id="dataList"></div>
+            <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+                <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+                <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
+                <script src="https://apis.google.com/js/platform.js" async defer></script>
+                
+                <script src="auth.js"></script>
                 <script src="Volunteer.js"></script>
             
-            
+
 
                 <script>
                     window.addEventListener('load', function() {
                     fetchDataCard();
                     });
             </script>
+
         <script>menu()</script>
 
     </body>

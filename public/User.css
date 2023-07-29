@@ -177,7 +177,7 @@ body {
 #sidebar.hide .side-menu li a {
 	width: calc(48px - (4px * 2));
 	/* transition: width .1s ease; */
-	font-size: 25px;
+	font-size: 20px;
 }
 
 #sidebar .side-menu.top li a:hover {
@@ -239,38 +239,55 @@ body {
 	color: var(--dark);
 }
 
-
-/* Volunteer Overview */
-#volunteer-table {
+/* table styling */
+  
+table {
 	width: 100%;
+	/* margin-left: 50px;
+	margin-right: 100px; */
 	border-collapse: collapse;
+	max-width: 100%;
+	overflow-x: auto;
   }
   
-  #volunteer-table th,
-  #volunteer-table td {
+table th,
+table td {
 	padding: 8px;
 	text-align: left;
 	border-bottom: 1px solid #ddd;
+	min-width: 100px;
   }
+
+
   
-  #volunteer-table th {
+ table th {
 	background-color: #f2f2f2;
   }
   
-  #volunteer-table tbody tr:hover {
+table tbody tr:hover {
 	background-color: #f9f9f9;
   }
   
-  #volunteer-table tbody td[contenteditable]:focus {
+  table tbody td[contenteditable]:focus {
 	outline: 2px solid #4285f4;
   }
   
+  input[type="text"].input-field,
+  input[type="number"].input-field,
+  input[type="date"].input-field,
+  select.input-field{
+  /* Set a fixed width for the input fields */
+  width: 120px; /* Adjust this value as needed */
+  /* Allow the text to wrap and expand the width */
+  white-space: normal;
+  /* Apply box-sizing property to prevent width increase due to padding and borders */
+  box-sizing: border-box;
+} 
 
-
-
-
-
-
+  
+input.small-input {
+	width: 70px; /* Adjust the width as needed */
+  }
 
 @media screen and (max-width: 768px) {
 	#sidebar {
@@ -289,3 +306,169 @@ body {
 
 
 
+/* Card design */
+.card {
+    width: 90%;
+    margin-left: 5%;
+  }
+  
+  .card-image {
+    max-width: 325px;
+    height: auto;
+    margin-left: 10%;
+    position: center;
+	margin-top: 50px;
+  }
+  
+  .card-title {
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  
+  .card-overview {
+    margin-top: 10px;
+    font-size: 0.9em;
+  }
+  
+  .card-organization {
+    margin-top: 10px;
+    font-size: 0.9em;
+  }
+  
+  .card-location {
+    margin-top: 10px;
+    font-size: 0.9em;
+  }
+
+ .card-button{
+    background: #FF4742;
+    border: 1px solid #FF4742;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 16px;
+    min-height: 40px;
+    outline: 0;
+    padding: 12px 14px;
+    text-align: center;
+    text-rendering: geometricprecision;
+    text-transform: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+
+ }
+
+ .like-button{
+  border: none;
+  background:none;
+  cursor: pointer;
+  display: inline-block;
+  font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 15px;
+  min-height: 40px;
+  color: #FF4742;
+ }
+
+ /* CSS styles for the heart icon */
+.like-button .fa-heart {
+  color: #ccc; /* Default color for the heart icon */
+}
+
+.like-button.liked .fa-heart {
+  color: red; /* Change the color to red when the opportunity is liked */
+}
+
+
+ .button-wrapper{
+    display: flex;
+    gap: 20px;
+ }
+
+
+
+
+
+ /* Account Setting */
+
+ /* Styling for the "Account Settings" section */
+#setting-profile {
+	margin-top: 30px;
+  }
+  
+  #setting-profile h2 {
+	font-size: 24px;
+	margin-bottom: 20px;
+  }
+  
+  #account-settings {
+	border: 1px solid #ccc;
+	padding: 20px;
+	border-radius: 5px;
+  }
+  
+  #account-settings h2 {
+	font-size: 20px;
+	margin-bottom: 10px;
+  }
+  
+  #account-settings div {
+	margin-bottom: 10px;
+  }
+  
+  #account-settings label {
+	font-weight: bold;
+  }
+  
+  #account-settings p {
+	margin: 0;
+	padding: 0;
+  }
+  
+  #account-settings input[type="text"],
+  #account-settings input[type="date"],
+  #account-settings select {
+	width: 100%;
+	padding: 8px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+  }
+  
+  #account-settings button {
+	background-color: #FF4742;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 16px;
+	margin-top: 10px;
+  }
+  
+  #account-settings button:hover {
+	background-color: #FF4742;
+  }
+  
+  #reset-password-btn {
+	background-color: #2196F3;
+	margin-left: 10px;
+  }
+  
+  #reset-password-btn:hover {
+	background-color: #0b7dda;
+  }
+  
+
+  /* Help&Support */
+  .contact{
+	margin-top: -150px;
+  }
