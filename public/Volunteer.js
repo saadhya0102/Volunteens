@@ -216,32 +216,43 @@ function filterModality(records) {
 
 */
 
+
+function getSelectedOptions(selectElement) {
+  const selectedOptions = Array.from(selectElement.selectedOptions);
+  return selectedOptions.map(option => option.value);
+}
+
 function filterData(records) {
   const modalityFilter = document.getElementById('modalityFilter');
   const typeFilter = document.getElementById('typeFilter');
   const ageFilter = document.getElementById('ageFilter');
-
+  const majorFilter = $('#majorFilter');
 
   const modalityCriteria = modalityFilter.value;
   const typeCriteria = typeFilter.value;
   const ageCriteria = parseInt(ageFilter.value);
-
+  const majorCriteria = majorFilter.val();  // Get the selected options as an array
 
   // Filter the records based on the selected filter criteria
   const filteredRecords = records.filter(record => {
     const modality = record.fields['In Person / Remote'] || '';
     const type = record.fields['Type of Volunteer Work'] || '';
     const age = parseInt(record.fields['Minimum Age'] || 0);
+    const majors = record.fields['Related Majors'] || [];  // This should be an array
 
     // Check if the record matches the selected filter criteria
     const modalityMatch = modalityCriteria === '' || modality === modalityCriteria;
     const typeMatch = typeCriteria === '' || type === typeCriteria;
     const ageMatch = isNaN(ageCriteria) || (ageCriteria === 0 && age === 0) || (ageCriteria > 0 && age <= ageCriteria);
+    const majorMatch = majorCriteria.length === 0 || majorCriteria.some(major => majors.includes(major));  // Check if any of the selected majors is in the record's majors
 
-    return modalityMatch && typeMatch && ageMatch;
+    return modalityMatch && typeMatch && ageMatch && majorMatch;
   });
-    return filteredRecords;
+
+  return filteredRecords;
 }
+
+
 
   function renderFilteredData(filteredData) {
     const dataContainer = document.getElementById('dataList');

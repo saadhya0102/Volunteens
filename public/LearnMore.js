@@ -146,6 +146,18 @@ function displayRecordData(record) {
     relatedMajorBoxDiv.appendChild(relatedMajorText);
     relatedMajorBoxDiv.classList.add('learn-more-box');
 
+    //One Time Event?
+    const oneTimeEventBoxDiv  = document.createElement('div');
+    const oneTimeEventIcon = document.createElement('div');
+    oneTimeEventIcon.innerHTML = '<i class="fa-solid fa-calendar-days"></i>';
+    oneTimeEventIcon.classList.add('icon');
+    const oneTimeEventText = document.createElement('p');
+    oneTimeEventText.textContent = record.fields['One Time Event?'] || '';
+    oneTimeEventText.classList.add('text');
+    oneTimeEventBoxDiv.appendChild(oneTimeEventIcon);
+    oneTimeEventBoxDiv.appendChild(oneTimeEventText);
+    oneTimeEventBoxDiv.classList.add('learn-more-box');
+
     //Learn More Boxes to Learn More Info
     learnMoreInfoDiv.appendChild(inPersonOrRemoteBoxDiv);
     learnMoreInfoDiv.appendChild(typeBoxDiv);
@@ -153,6 +165,7 @@ function displayRecordData(record) {
     learnMoreInfoDiv.appendChild(commitmentBoxDiv);
     learnMoreInfoDiv.appendChild(individualOrGroupBoxDiv);
     learnMoreInfoDiv.appendChild(relatedMajorBoxDiv);
+    learnMoreInfoDiv.appendChild(oneTimeEventBoxDiv);
 
     //Learn More Info to Learn More Container
     containerLearnMoreDiv.appendChild(learnMoreInfoDiv);
@@ -201,6 +214,17 @@ function displayRecordData(record) {
     responsibilitiesValue.textContent = record.fields['Responsibilities'] || '';
     learnMoreDetailDiv.appendChild(responsibilitiesLabel);
     learnMoreDetailDiv.appendChild(responsibilitiesValue);
+
+    //Age Detail
+    const ageDetailValue = document.createElement('p');
+    ageDetailValue.textContent = record.fields['Age Detail'] || '';
+    if(ageDetailValue.textContent.length !== 0)
+    {
+      const ageDetailLabel = document.createElement('label');
+      ageDetailLabel.textContent = 'Age Information: '; 
+      learnMoreDetailDiv.appendChild(ageDetailLabel);
+      learnMoreDetailDiv.appendChild(ageDetailValue);
+    }
 
     //Notes
     //const noteLabel = document.createElement('label');

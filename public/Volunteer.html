@@ -26,16 +26,15 @@
         <link rel = "stylesheet" href = "style.css"/>
         <link rel="stylesheet" href="Volunteer.css"/>
         <script src="Volunteer.js"></script>
-        
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/css/select2.min.css" rel="stylesheet" />
         <!--logo-->
         <link rel="icon" href="Pictures/logo.PNG" type="image/x-icon">
-
-
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.min.js"></script>
     </head>
     <body>
         <header>
             <img src="./Pictures/logo.png" class="logo" alt="logo" />
-            <!-- <a href="#" class="logo"><i class="ri-home-heart-line"></i><span>VolunTeen</span></a> -->
             <ul class ="navbar">
                 <li><a href = "index.html">Home</a></li>
                 <li><a href = "AboutUS.html">About Us</a></li>
@@ -48,23 +47,7 @@
                 <div class = "bx bx-menu" id="menu-icon" ><i class="fa-solid fa-bars"></i></div>
             </div>
         </header>
-
-
-                <h1 id = "volunteer_heading">Volunteer Opportunity</h1>
-            <!--
-                <div class="filterContainer">
-                    <label for="majorFilter">Related Major:</label>
-                    <select id="majorFilter">
-                      <option value="Art">Art</option>
-                      <option value="Science and Math">Science and Math</option>
-                      <option value="Environment">Environment</option>
-                      <option value="Business">Business</option>
-                      <option value="Engineering and Technology">Engineerig and Technology</option>
-                      <option value="Literature, Language, and Social Science">Literature, Language, and Social Science</option>
-                    </select>
-                  </div>
-                <div id="dataList" class="container"></div>
-            -->
+            <h1 id = "volunteer_heading">Volunteer Opportunity</h1>
 
             <div class="filterContainer">
                 <label for="modalityFilter">Modality:</label>
@@ -89,21 +72,31 @@
             <div class="filterContainer">
                 <label for="ageFilter">Minimum Age:</label>
                 <input type="number" id="ageFilter" min="0" step="1" value="">
-              </div>
+            </div>
+
+            <div class="filterContainer">
+                <label for="majorFilter">Related Majors:</label>
+                <select id="majorFilter" multiple = "multiple">
+                    <option value="Art">Art</option>
+                    <option value="Environment">Environment</option>
+                    <option value="Science and Math">Science and Math</option>
+                    <option value="Literature, Language, and Social Science">Literature, Language, and Social Science</option>
+                    <option value="Business">Business</option>
+                    <option value="Engineering and Technology">Engineering and Technology</option>
+                </select>
+            </div>            
+
             <div id="dataList"></div>
-                <script src="Volunteer.js"></script>
-            
-            
-
-                <script>
-                    window.addEventListener('load', function() {
-                    fetchDataCard();
-                    });
+            <script>
+                window.addEventListener('load', function() {
+                fetchDataCard();
+                });
             </script>
-        <script>menu()</script>
-
+            <script>
+                $(document).ready(function() {
+                    $('#majorFilter').select2();
+                });
+            </script>
+            <script>menu()</script>
     </body>
 </html>
-
-
-
