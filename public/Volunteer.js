@@ -41,13 +41,24 @@ function fetchDataCard() {
       
               // Fetch the current user's like status for all opportunities
               fetchUserLikedOpportunities(firebaseUserId)
+                .then(likedOpportunities => {
+                  // Update the like buttons based on the user's liked opportunities
+                  const likeButtons = document.querySelectorAll('.like-button');
+                  likeButtons.forEach(likeButton => {
+                    const opportunityId = likeButton.dataset.opportunityId;
+                    if (likedOpportunities.includes(opportunityId)) {
+                      likeButton.classList.add('liked');
+                    } else {
                       likeButton.classList.remove('liked');
                     }
                   });
                 })
                 .catch(error => {
+                  console.error('Error fetching user liked opportunities:', error);
+                });
             }
       
+      hideLoading();
 
       // Add event listeners to the filters
       const filters = document.querySelectorAll('.filterContainer select');
