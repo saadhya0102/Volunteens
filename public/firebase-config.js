@@ -4,6 +4,9 @@ const airtableApiKey = 'keyhRdrFmvbRGMKRk';
   const airtableTable = 'User';
   const airtableEndpoint = `https://api.airtable.com/v0/${airtableBaseId}/${airtableTable}`;
 
+
+
+
 // Signup Function
 const signupForm = document.querySelector('.signup form');
 signupForm.addEventListener('submit', (e) => {
@@ -15,6 +18,10 @@ signupForm.addEventListener('submit', (e) => {
   const zipcode = signupForm['signup-zipcode'].value;
   const birthday = signupForm['signup-date'].value;
   const gender = signupForm['signup-gender'].value;
+  
+  console.log("Email:", email);
+  console.log("Password:", password);
+
 
   // Sign up with email and password
   firebase.auth().createUserWithEmailAndPassword(email, password)
@@ -24,7 +31,8 @@ signupForm.addEventListener('submit', (e) => {
       const userId = user.uid;
       alert("Registration successfully!!");
 
-    const data = [
+      // Save additional user data to Airtable or any other database
+      const data = [
         {
           fields: {
             ID: userId,
@@ -40,7 +48,6 @@ signupForm.addEventListener('submit', (e) => {
 
       console.log("Data", data);
       axios.post(airtableEndpoint, { records: data }, {
-
         headers: {
           'Authorization': `Bearer ${airtableApiKey}`,
           'Content-Type': 'application/json'
@@ -50,30 +57,28 @@ signupForm.addEventListener('submit', (e) => {
           console.log('User information saved to Airtable:', response.data);
         })
         .catch((error) => {
-            if (error.response && error.response.data) {
-                // Handle validation errors
-                const validationErrors = error.response.data;
-                console.error('Validation errors:', validationErrors);
-              } else {
-                // Handle other errors
-                console.error('Error saving user information to Airtable:', error);
-                alert('An error occurred while saving user information.');
-
-              }
-            });
+          if (error.response && error.response.data) {
+            // Handle validation errors
+            const validationErrors = error.response.data;
+            console.error('Validation errors:', validationErrors);
+          } else {
+            // Handle other errors
+            console.error('Error saving user information to Airtable:', error);
+            alert('An error occurred while saving user information.');
+          }
+        });
 
       // Redirect or perform other actions
       // ...
     })
     .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
-        console.log(errorMessage);
-        alert(error);
-
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorMessage);
+      alert(errorMessage);
     });
 });
+
 
 // Login Function
 const loginForm = document.querySelector('.login form');
@@ -91,9 +96,6 @@ loginForm.addEventListener('submit', (e) => {
       const userId = user.uid;
       alert(user.email+" Login successfully!!!");
       // window.location.href = 'User.html'; 
-      window.location.href = `User.html?userId=${userId}`;
-
-
 
       // Save last login time to Airtable
     //   const data = {
@@ -137,6 +139,7 @@ loginForm.addEventListener('submit', (e) => {
       })
         .then((response) => {
           console.log('Last login time saved to Airtable:', response.data);
+          // window.location.href = `User.html?userId=${userId}`;
         })
         .catch((error) => {
           console.error('Error saving last login time to Airtable:', error.message);
@@ -159,114 +162,114 @@ loginForm.addEventListener('submit', (e) => {
 
 
 
-/// Google Sign-In button click event
-
-
 document.getElementById("google-login").addEventListener("click", function() {
-    console.log("Google Sign-In button clicked");
-  
-    firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider())
-      .then((result) => {
-        console.log("Google Sign-In success");
-  
-        const user = result.user;
-        const currentTime = new Date().toISOString();
+  console.log("Google Sign-In button clicked");
 
-  
-        // Check if the user exists in Airtable
-        const query = `filterByFormula={ID}='${user.uid}'&maxRecords=1`; // Adjust 'ID' to match your column name
-  
-        axios.get(`${airtableEndpoint}?${query}`, {
-          headers: {
-            'Authorization': `Bearer ${airtableApiKey}`,
-            'Content-Type': 'application/json'
-          }
-        })
-          .then((response) => {
-            const records = response.data.records;
-            if (records.length > 0) {
-              // User exists in Airtable, update LastLogin field
-              const recordId = records[0].id;
-              const data = {
-                records: [
-                  {
-                    id: recordId,
-                    fields: {
-                      LastLogin: currentTime
-                    }
-                  }
-                ]
-              };
-  
-              // Make an API request to update the user's LastLogin field
-              axios.patch(`${airtableEndpoint}`, data, {
-                headers: {
-                  'Authorization': `Bearer ${airtableApiKey}`,
-                  'Content-Type': 'application/json'
+  // Use signInWithPopup instead of signInWithRedirect
+  const provider = new firebase.auth.GoogleAuthProvider();
+  provider.setCustomParameters({ prompt: "select_account" }); // Force user to select account
+
+  firebase.auth().signInWithPopup(provider)
+    .then((result) => {
+      console.log("Google Sign-In success");
+      const user = result.user;
+      const currentTime = new Date().toISOString();
+
+      // Check if the user exists in Airtable
+      const query = `filterByFormula={ID}='${user.uid}'&maxRecords=1`; // Adjust 'ID' to match your column name
+
+      axios.get(`${airtableEndpoint}?${query}`, {
+        headers: {
+          'Authorization': `Bearer ${airtableApiKey}`,
+          'Content-Type': 'application/json'
+        }
+      })
+      .then((response) => {
+        const records = response.data.records;
+        if (records.length > 0) {
+          // User exists in Airtable, update LastLogin field
+          const recordId = records[0].id;
+          const data = {
+            records: [
+              {
+                id: recordId,
+                fields: {
+                  LastLogin: currentTime
                 }
-              })
-                .then((response) => {
-                  console.log('Last login time updated in Airtable:', response.data);
-                  window.location.href = `User.html?userId=${userCredential.user.uid}`;
-                })
-                .catch((error) => {
-                  console.error('Error updating last login time in Airtable:', error.message);
-                });
-            } else {
-              // User does not exist in Airtable, create a new row with AccountCreated field
-              const data = [
-                {
-                  fields: {
-                    ID: user.uid,
-                    Name: user.displayName,
-                    Email: user.email,
-                    LastLogin: currentTime,
-                    AccountCreated: currentTime,
-                    // Add more fields as needed
-                  }
-                }
-              ];
-  
-              // Make an API request to create a new row in Airtable
-              axios.post(airtableEndpoint, { records: data }, {
-                headers: {
-                  'Authorization': `Bearer ${airtableApiKey}`,
-                  'Content-Type': 'application/json'
-                }
-              })
-                .then((response) => {
-                  console.log('New user information saved to Airtable:', response.data);
-                  window.location.href = `User.html?userId=${userCredential.user.uid}`;
-                })
-                .catch((error) => {
-                  if (error.response && error.response.data) {
-                    // Handle validation errors
-                    const validationErrors = error.response.data;
-                    console.error('Validation errors:', validationErrors);
-                  } else {
-                    // Handle other errors
-                    console.error('Error saving new user information to Airtable:', error);
-                    alert('An error occurred while saving user information.');
-                  }
-                });
+              }
+            ]
+          };
+
+          // Make an API request to update the user's LastLogin field
+          axios.patch(`${airtableEndpoint}`, data, {
+            headers: {
+              'Authorization': `Bearer ${airtableApiKey}`,
+              'Content-Type': 'application/json'
             }
-  
+          })
+          .then((response) => {
+            alert(user.email + " Login successfully!!!");
+            console.log('Last login time updated in Airtable:', response.data);
+            // window.location.href = `User.html?userId=${user.uid}`;
           })
           .catch((error) => {
-            console.error('Error checking user existence in Airtable:', error.message);
+            console.error('Error updating last login time in Airtable:', error.message);
           });
+        } else {
+          // User does not exist in Airtable, create a new row with AccountCreated field
+          const data = [
+            {
+              fields: {
+                ID: user.uid,
+                Name: user.displayName,
+                Email: user.email,
+                LastLogin: currentTime,
+                AccountCreated: currentTime,
+                // Add more fields as needed
+              }
+            }
+          ];
+
+          // Make an API request to create a new row in Airtable
+          axios.post(airtableEndpoint, { records: data }, {
+            headers: {
+              'Authorization': `Bearer ${airtableApiKey}`,
+              'Content-Type': 'application/json'
+            }
+          })
+          .then((response) => {
+            alert(user.email + " Login successfully!!!");
+            console.log('New user information saved to Airtable:', response.data);
+            // window.location.href = `User.html?userId=${user.uid}`;
+          })
+          .catch((error) => {
+            if (error.response && error.response.data) {
+              // Handle validation errors
+              const validationErrors = error.response.data;
+              console.error('Validation errors:', validationErrors);
+            } else {
+              // Handle other errors
+              console.error('Error saving new user information to Airtable:', error);
+              alert('An error occurred while saving user information.');
+            }
+          });
+        }
+
       })
       .catch((error) => {
-        console.error("Google Sign-In error:", error);
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.email;
-        // The AuthCredential type that was used.
-        const credential = error.credential;
-        // ...
-        alert(errorMessage);
+        console.error('Error checking user existence in Airtable:', error.message);
       });
-  });
-  
+    })
+    .catch((error) => {
+      console.error("Google Sign-In error:", error);
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.email;
+      // The AuthCredential type that was used.
+      const credential = error.credential;
+      // ...
+      alert(errorMessage);
+    });
+});

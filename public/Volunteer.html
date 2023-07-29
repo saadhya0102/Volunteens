@@ -47,8 +47,34 @@
                 <div class = "bx bx-menu" id="menu-icon" ><i class="fa-solid fa-bars"></i></div>
             </div>
         </header>
+<<<<<<< HEAD
             <h1 id = "volunteer_heading">Volunteer Opportunity</h1>
 
+=======
+
+
+                <h1 id = "volunteer_heading">Volunteer Opportunity</h1>
+            <!--
+                <div class="filterContainer">
+                    <label for="majorFilter">Related Major:</label>
+                    <select id="majorFilter">
+                      <option value="Art">Art</option>
+                      <option value="Science and Math">Science and Math</option>
+                      <option value="Environment">Environment</option>
+                      <option value="Business">Business</option>
+                      <option value="Engineering and Technology">Engineerig and Technology</option>
+                      <option value="Literature, Language, and Social Science">Literature, Language, and Social Science</option>
+                    </select>
+                  </div>
+                <div id="dataList" class="container"></div>
+            -->
+            <!-- Add this div for the loading spinner -->
+            <div id="loadingSpinner" class="loading-container">
+                <div class="loading-spinner"></div>
+                <!-- You can also add a loading message here if desired -->
+            </div>
+  
+>>>>>>> 6577959d740855e84f4b05a98b51d59298233b58
             <div class="filterContainer">
                 <label for="modalityFilter">Modality:</label>
                 <select id="modalityFilter">
@@ -72,6 +98,7 @@
             <div class="filterContainer">
                 <label for="ageFilter">Minimum Age:</label>
                 <input type="number" id="ageFilter" min="0" step="1" value="">
+<<<<<<< HEAD
             </div>
 
             <div class="filterContainer">
@@ -85,6 +112,27 @@
                     <option value="Engineering and Technology">Engineering and Technology</option>
                 </select>
             </div>            
+=======
+              </div>
+            <div id="dataList"></div>
+            <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+                <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+                <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
+                <script src="https://apis.google.com/js/platform.js" async defer></script>
+                
+                <script src="auth.js"></script>
+                <script src="Volunteer.js"></script>
+            
+
+
+                <script>
+                    window.addEventListener('load', function() {
+                    fetchDataCard();
+                    });
+            </script>
+
+        <script>menu()</script>
+>>>>>>> 6577959d740855e84f4b05a98b51d59298233b58
 
             <div id="dataList"></div>
             <script>

@@ -87,6 +87,28 @@
 
  }
 
+ .like-button{
+  border: none;
+  background:none;
+  cursor: pointer;
+  display: inline-block;
+  font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 15px;
+  min-height: 40px;
+  color: #FF4742;
+ }
+
+ /* CSS styles for the heart icon */
+.like-button .fa-heart {
+  color: #ccc; /* Default color for the heart icon */
+}
+
+.like-button.liked .fa-heart {
+  color: red; /* Change the color to red when the opportunity is liked */
+}
+
  #dataList{
     display: flex;
     flex-wrap: wrap;

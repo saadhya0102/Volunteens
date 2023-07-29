@@ -48,11 +48,65 @@ function displayRecordData(record) {
     secondButton.classList.add('card-button');
     secondButton.textContent = 'Apply Now';
     secondButton.addEventListener('click', () => {
-      // Handle second button click event here
-      const applicationLink = record.fields['Application Form']; 
-      window.open(applicationLink, '_blank'); // Open the link in a new tab
+      /// Check if the user is logged in
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        // User is logged in, open the link in a new tab
+        const applicationLink = record.fields['Application']; 
+        window.open(applicationLink, '_blank');
+      } else {
+        // User is not logged in, prompt them to the login page
+        alert('Please log in to apply.');
+        // Redirect to the login page
+        window.location.href = 'myAccount.html';
+      }
     });
+  });
+
+  // Create the like button
+  const likeButton = document.createElement('button');
+  likeButton.innerHTML = ' <i class="fa-solid fa-heart"></i>';
+  likeButton.classList.add('like-button');
+
+   // Check if the user is logged in
+  firebase.auth().onAuthStateChanged((user)=>{
+    if (user) {
+      // User is logged in, fetch the firebaseUserId
+      const firebaseUserId = user.uid;
+    
+      // Fetch the current user's like status for this opportunity
+      fetchUserRecordByFirebaseId(firebaseUserId)
+        .then(userRecord => {
+          if (!userRecord) {
+            console.error('User record not found for the given Firebase user ID.');
+            return;
+          }
+    
+          const userRecordId = userRecord.id;
+          const peopleLiked = record.fields['People Liked'] || [];
+          const liked = peopleLiked.includes(userRecordId);
+    
+          // Add the 'liked' class to the like button if the user has already liked the opportunity
+          if (liked) {
+            likeButton.classList.add('liked');
+          } else {
+            likeButton.classList.remove('liked');
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching user record:', error);
+        });
+      }
+  })
+   // Add event listener to the Like button
+   likeButton.addEventListener('click', () => {
+    console.log("record", record);
+    handleLikeButtonClick(record,likeButton);
+  });
+
     learnMoreHeader.appendChild(secondButton);
+    learnMoreHeader.appendChild(likeButton);
+
 
 
     //const locationValue = document.createElement('p');
@@ -297,3 +351,102 @@ function displayRecordData(record) {
       console.error('Error fetching record:', error);
     });
   
+
+
+    function fetchUserRecordByFirebaseId(firebaseUserId) {
+      // Make a request to fetch the user record based on the Firebase user ID
+      return fetch(`https://api.airtable.com/v0/appVuPVt4NexTjNPj/User?filterByFormula={ID}="${firebaseUserId}"`, {
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer keyhRdrFmvbRGMKRk',
+        },
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log("find user record", data.records[0]);
+          return data.records[0]; // Assuming the filter will return at most one record
+        })
+        .catch(error => {
+          console.error('Error fetching user record by Firebase ID:', error);
+          return null;
+        });
+    }
+    
+    function updateVolunteerOpportunityRecord(recordId, updatedFields) {
+      // Make a PATCH request to update the Volunteer Opportunity record
+      fetch(`https://api.airtable.com/v0/appVuPVt4NexTjNPj/Volunteer%20Opportunity/${recordId}`, {
+        method: 'PATCH',
+        headers: {
+          'Authorization': 'Bearer keyhRdrFmvbRGMKRk',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ fields: updatedFields }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Volunteer Opportunity record updated:', data);
+        })
+        .catch(error => {
+          console.error('Error updating Volunteer Opportunity record:', error);
+        });
+    }
+    
+    // Function to handle liking and unliking a volunteer opportunity
+    function handleLikeButtonClick(record,likeButton) {
+      const user = firebase.auth().currentUser;
+      const firebaseUserId = user ? user.uid : null;
+    
+      if (!firebaseUserId) {
+        alert('Please log in to like the volunteer opportunity.');
+        window.location.href = 'myAccount.html';
+        return;
+      }
+    
+      fetchUserRecordByFirebaseId(firebaseUserId)
+        .then(userRecord => {
+          if (!userRecord) {
+            console.error('User record not found for the given Firebase user ID.');
+            return;
+          }
+    
+          const userRecordId = userRecord.id;
+          const peopleLiked = record.fields['People Liked'] || [];
+          const liked = peopleLiked.includes(userRecordId);
+    
+          if (liked) {
+            // If the user already liked the opportunity, remove the link
+            likeButton.classList.remove('liked');
+            const updatedPeopleLiked = peopleLiked.filter(id => id !== userRecordId);
+            Promise.all([
+              updateVolunteerOpportunityRecord(record.id, { 'People Liked': updatedPeopleLiked }),
+            ])
+              .then(() => {
+                console.log('Like removed successfully.');
+                record.fields['People Liked'] = updatedPeopleLiked; // Update the record object with the new "People Liked" data
+              })
+              .catch(error => {
+                console.error('Error removing like:', error);
+              });
+          } else {
+            // If the user hasn't liked the opportunity, add the link
+            likeButton.classList.add('liked');
+            const updatedPeopleLiked = [...peopleLiked, userRecordId];
+            Promise.all([
+              updateVolunteerOpportunityRecord(record.id, { 'People Liked': updatedPeopleLiked }),
+            ])
+              .then(() => {
+                console.log('Like added successfully.');
+                record.fields['People Liked'] = updatedPeopleLiked; // Update the record object with the new "People Liked" data
+              })
+              .catch(error => {
+                console.error('Error adding like:', error);
+              });
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching user record:', error);
+        });
+    }
+    
+    
+    
