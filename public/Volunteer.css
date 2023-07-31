@@ -32,13 +32,18 @@
 .card {
     width: 90%;
     margin-left: 5%;
+    display:flex;
+	justify-content: center;
   }
   
   .card-image {
     max-width: 325px;
     height: auto;
-    margin-left: 15%;
     position: center;
+    margin-top: 20px;
+	  display: block;
+	  margin-left: auto;
+  	margin-right: auto;
   }
   
   .card-title {
@@ -125,4 +130,39 @@
     margin-left:35%;
     margin-bottom: 50px;
     color: black;
+ }
+
+ @media screen and (max-width: 1400px) {
+	.card-image {
+		max-width: 270px;
+		height: auto;
+		position: center;
+		margin-top: 50px;
+	  }
+ }
+
+ @media screen and (max-width: 1200px) {
+	.card-image {
+		max-width: 240px;
+		height: auto;
+		position: center;
+		margin-top: 50px;
+	  }
+ }
+
+ @media screen and (max-width: 850px) {
+	.card-image {
+		max-width: 220px;
+		height: auto;
+		position: center;
+		margin-top: 50px;
+	  }
+ }
+ @media screen and (max-width: 1000px) {
+	.card-image {
+		max-width: 230px;
+		height: auto;
+		position: center;
+		margin-top: 50px;
+	  }
  }

@@ -163,6 +163,7 @@
     }
     .containerContact .contactInfo .box .icon{
         margin-left: -10%;
+        margin-right: 20px;
     }
     .containerContact .contactInfo,
     .contactForm{

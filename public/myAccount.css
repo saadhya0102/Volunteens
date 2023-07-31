@@ -210,3 +210,13 @@ label {
     }
 }
 
+
+
+@media (max-width: 420px){
+.form{
+    margin-top: -150px;
+}
+.form.signup{
+   margin-top: -125px;
+}
+}

@@ -124,11 +124,12 @@
         <section id="content">
                     <section id="overview-manage">
                         <h2>Volunteer Overview</h2>
-                        <table id="volunteer-table">
+                        <div class="table-container">
+                            <table id="volunteer-table">
                             <thead>
                                 <tr>
                                     <th>Volunteer Name</th>
-                                    <th>Organizaion</th>
+                                    <th>Organization</th>
                                     <th>Type</th>
                                     <th>Application Submission Date</th>
                                     <th>Volunteer Start Time</th>
@@ -139,6 +140,7 @@
                                 <!-- Table rows will be dynamically generated -->
                             </tbody>
                         </table>
+                    </div>
                         <!-- Content for Overview section -->
                     </section>
         
@@ -150,6 +152,9 @@
                       
                     <section id="status-applied">
                         <h2>Pending/Applied</h2>
+                        <div class="table-container">
+                        <div class="table-container">
+
                         <table id="applied-table">
                             <thead>
                                 <tr>
@@ -165,12 +170,15 @@
                                 <!-- Table rows will be dynamically generated -->
                             </tbody>
                         </table>
+                        </div>
+                        </div>
 
                         <!-- Content for Applied section -->
                     </section>
                       
                     <section id="status-current">
                         <h2>Current Volunteer</h2>
+                        <div class="table-container">
                         <table id="current-table">
                             <thead>
                                 <tr>
@@ -187,6 +195,7 @@
                                 <!-- Table rows will be dynamically generated -->
                             </tbody>
                         </table>
+                        </div>
                         <!-- <button type="submit" id="save-button-current">Save</button> -->
 
                         <!-- Content for Past Volunteer section -->
@@ -194,11 +203,12 @@
                       
                     <section id="status-past">
                         <h2>Past Volunteer</h2>
+                        <div class="table-container">
                         <!-- Content for Thinking Applying section -->
                         <table id="past-table">
                             <thead>
                               <tr>
-                                <th>Volunteer Name</th>
+                                <th>Name</th>
                                 <th>Organization</th>
                                 <th>Role/Position</th>
                                 <th>Start Date</th>
@@ -211,6 +221,7 @@
                               <!-- Table rows will be dynamically generated -->
                             </tbody>
                           </table>
+                          </div>
                           <!-- <button type="submit" id="save-button-past">Save</button> -->
                     </section>
         

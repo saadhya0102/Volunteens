@@ -16,6 +16,21 @@ function menu() {
 	menuBar.addEventListener('click', function() {
 	  sidebar.classList.toggle('hide');
 	});
+
+	// Check if the screen size is smaller than 1090px on page load
+	if (window.innerWidth < 850) {
+		sidebar.classList.add('hide');
+	  }
+	
+	  // Add an event listener to toggle the "hide" class when the window is resized
+	  window.addEventListener('resize', function () {
+		if (window.innerWidth < 850) {
+		  sidebar.classList.add('hide');
+		} else {
+		  sidebar.classList.remove('hide');
+		}
+	  });
+
   }
 
   document.addEventListener('DOMContentLoaded', function() {
@@ -439,26 +454,36 @@ function updateStatusInAirtable(applicationId, newStatus) {
   }
 
   
-  // Display User Data in the Dashboard
-  function displayOverviewData(user, combinedData) {
+// Display User Data in the Dashboard
+function displayOverviewData(user, combinedData) {
 
 	const volunteerTable = document.getElementById('volunteer-table');
 	const tbody = volunteerTable.querySelector('tbody');
-
+  
+	// Clear the table body
 	tbody.innerHTML = '';
-
+	// Create the data rows
 	combinedData.forEach(data => {
-	  const row = document.createElement('tr');
-	  row.innerHTML = `
-		<td>${data.volunteerName}</td>
-		<td>${data.organization}</td>
-		<td>${data.type}</td>
-		<td>${data.submissionDate}</td>
-		<td>
-        	<input type="date" id="start-date-${data.applicationId}" value="${data.startDate}" class="input-field">
+		const row = document.createElement('tr');
+	
+		// const headers = volunteerTable.querySelectorAll('thead th');
+		// headers.forEach(header => {
+		// const cell = document.createElement('td');
+		// cell.textContent = data[header.dataset.key];
+		// cell.setAttribute('data-title', header.innerText); // Set the data-title attribute to the th text
+		// row.appendChild(cell);
+		// });
+
+	  row.innerHTML += `
+		<td data-title="Name">${data.volunteerName}</td>
+		<td data-title="Organization">${data.organization}</td>
+		<td data-title="Type">${data.type}</td>
+		<td data-title="Submission Date">${data.submissionDate}</td>
+		<td data-title="Start Date">
+		  <input type="date" id="start-date-${data.applicationId}" value="${data.startDate}" class="input-field">
 		</td>
-		<td>
-       	 <select id="status-${data.applicationId}">
+		<td data-title="Status">
+		  <select id="status-${data.applicationId}">
 			<option value="Pending/Applied" ${data.status === 'Pending/Applied' ? 'selected' : ''}>Pending/Applied</option>
 			<option value="Current" ${data.status === 'Current' ? 'selected' : ''}>Current</option>
 			<option value="Past" ${data.status === 'Past' ? 'selected' : ''}>Past</option>
@@ -466,21 +491,27 @@ function updateStatusInAirtable(applicationId, newStatus) {
 		</td>
 	  `;
 	  tbody.appendChild(row);
-		// Add event listener to date input
-		const dateInput = row.querySelector(`#start-date-${data.applicationId}`);
-		dateInput.addEventListener('change', event => {
+  console.log('row', row);
+	  // Add event listener to date input
+	  const dateInput = row.querySelector(`#start-date-${data.applicationId}`);
+	  dateInput.addEventListener('change', event => {
 		const newStartDate = event.target.value;
 		updateStartDateInAirtable(data.applicationId, newStartDate);
-		});
-
-		// Add event listener to status <select> element
-		const statusSelect = row.querySelector(`#status-${data.applicationId}`);
-		statusSelect.addEventListener('change', event => {
-		  const newStatus = event.target.value;
-		  updateStatusInAirtable(data.applicationId, newStatus);
-		});
+	  });
+  
+	  // Add event listener to status <select> element
+	  const statusSelect = row.querySelector(`#status-${data.applicationId}`);
+	  statusSelect.addEventListener('change', event => {
+		const newStatus = event.target.value;
+		updateStatusInAirtable(data.applicationId, newStatus);
+	  });
 	});
-}
+  }
+  
+  
+
+
+  
 
 
 function displayAppliedData(combinedData) {
@@ -494,13 +525,13 @@ function displayAppliedData(combinedData) {
 	appliedData.forEach(data => {
 	  const row = document.createElement('tr');
 	  row.innerHTML = `
-		<td>${data.volunteerName}</td>
-		<td>${data.organization}</td>
-		<td>
+		<td data-title="Name">${data.volunteerName}</td>
+		<td data-title="Organization">${data.organization}</td>
+		<td data-title="Role">
 		  <input type="text" id="role-${data.applicationId}" value="${data.role}" class="input-field"/>
 		</td>
-		<td>${data.submissionDate}</td>
-		<td>${data.contactInformation}</td>
+		<td data-title="Submission Date">${data.submissionDate}</td>
+		<td data-title="Contact Information">${data.contactInformation}</td>
 	  `;
 	  tbody.appendChild(row);
   
@@ -531,39 +562,24 @@ function displayCurrentData(combinedData) {
 	currentData.forEach(data => {
 	  const row = document.createElement('tr');
 	  row.innerHTML = `
-		<td>${data.volunteerName}</td>
-		<td>${data.organization}</td>
-		<td>
+		<td data-title="Name">${data.volunteerName}</td>
+		<td data-title="Organization">${data.organization}</td>
+		<td data-title="Role">
 		  <input type="text" id="role-${data.applicationId}" value="${data.role}" class="input-field"/>
 		</td>
-		<td>
+		<td data-title="Start Date">
 		  <input type="date" id="start-date-${data.applicationId}" value="${data.startDate}" class="input-field"/>
 		</td>
-		<td>
+		<td data-title="Schedule">
 		  <input type="text" id="schedule-${data.applicationId}" value="${data.schedule}" class="input-field small-input"/>
 		</td>
-		<td>
+		<td data-title="Total Hours">
     	<input type="number" id="total-hours-${data.applicationId}" value="${data.hoursVolunteered}" min="0" class="input-field"/>
   		</td>
-	  	<td>${data.contactInformation}</td>
+	  	<td data-title="Contact Information">${data.contactInformation}</td>
 	  `;
 	  tbody.appendChild(row);
 	  
-	//   const savePastButton = document.getElementById('save-button-current');
-	//   savePastButton.addEventListener('click',event=>{
-	// 	const roleInput = row.querySelector(`#role-${data.applicationId}`);
-	// 	const newRole = roleInput.value;
-	// 	updateRoleInAirtable(data.applicationId, newRole);
-	// 	const startDateInput = row.querySelector(`#start-date-${data.applicationId}`);
-	// 	const newStartDate = startDateInput.value;
-	// 	updateStartDateInAirtable(data.applicationId, newStartDate);
-	// 	const scheduleInput = row.querySelector(`#schedule-${data.applicationId}`);
-	// 	const newSchedule = scheduleInput.value;
-	// 	updateScheduleInAirtable(data.applicationId, newSchedule);
-	// 	const totalHoursInput = row.querySelector(`#total-hours-${data.applicationId}`);
-	// 	const newTotalHours = totalHoursInput.value;
-	// 	updateTotalHoursInAirtable(data.applicationId, newTotalHours);
-	// })
 	  // Add event listener to role input
 	  const roleInput = row.querySelector(`#role-${data.applicationId}`);
 	  roleInput.addEventListener('input', event => {
@@ -612,18 +628,18 @@ function displayCurrentData(combinedData) {
 	pastData.forEach(data => {
 	  const row = document.createElement('tr');
 	  row.innerHTML = `
-		<td>${data.volunteerName}</td>
-		<td>${data.organization}</td>
-		<td>
+		<td data-title="Name">${data.volunteerName}</td>
+		<td data-title="Organization">${data.organization}</td>
+		<td data-title="Role">
 		  <input type="text" id="role-${data.applicationId}" value="${data.role}" />
 		</td>
-		<td>
+		<td data-title="Start Date">
 		  <input type="date" id="start-date-${data.applicationId}" value="${data.startDate}" />
 		</td>
-		<td>
+		<td data-title="End Date">
 		  <input type="date" id="end-date-${data.applicationId}" value="${data.endDate}" />
 		</td>
-		<td>
+		<td data-title="Total Hours">
 		  <input type="number" id="total-hours-${data.applicationId}" value="${data.hoursVolunteered}" min="0" step="1" />
 		</td>
 	  `;
