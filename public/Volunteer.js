@@ -6,7 +6,49 @@ function menu() {
     navbar.classList.toggle('open');
   });
 }
+
+
+
+// JavaScript Code
+let selectedMajor = null; // Initialize a global variable to store the selected major
+
+function showCheckboxes() {
+  var checkboxes = document.getElementById("checkboxes");
+  var expanded = checkboxes.style.display === "block";
+  checkboxes.style.display = expanded ? "none" : "block";
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const majorCheckboxes = document.querySelectorAll('#checkboxes input[type="checkbox"]');
+
+  // Attach the event listener to each checkbox
+  majorCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', () => {
+      updateSelectedMajors(data.records);
+    });
+  });
+
+  function updateSelectedMajors(records) {
+    // Update the selected major whenever a checkbox is clicked
+    selectedMajor = Array.from(majorCheckboxes)
+      .filter(checkbox => checkbox.checked)
+      .map(checkbox => checkbox.value);
+
+    // Rest of the function remains unchanged...
+    console.log("selected major", selectedMajor);
+    const filteredData = filterData(records);
+    console.log('Filtered data:', filteredData);
+    renderFilteredData(filteredData);
+  }
+});
+
+
+
+
+
+
 function fetchDataCard() {
+
   showLoading();
   // Retrieve data from Airtable
   fetch('https://api.airtable.com/v0/appVuPVt4NexTjNPj/Volunteer Opportunity', {
@@ -16,8 +58,11 @@ function fetchDataCard() {
     }
   })
     .then(response => response.json())
-    .then(data => {
+    .then(fetchedData => {
+      data = fetchedData; // Assign the fetched data to the global variable
+
       // Generate cards with data from Airtable
+
       const dataContainer = document.getElementById('dataList');
       dataContainer.innerHTML = '';
       let filteredData = data.records; // Initial data is unfiltered
@@ -54,6 +99,7 @@ function fetchDataCard() {
 
       hideLoading();
 
+
       // Add event listeners to the filters
       const filters = document.querySelectorAll('.filterContainer select');
       filters.forEach(filter => {
@@ -66,16 +112,13 @@ function fetchDataCard() {
 
       const ageFilter = document.getElementById('ageFilter');
       ageFilter.addEventListener('input', () => {
+        console.log("age data records",data.records )
         filteredData = filterData(data.records);
         console.log('Filtered data:', filteredData);
         renderFilteredData(filteredData);
       });
-      
-      const modalityFilter = document.getElementById('modalityFilter');
-            modalityFilter.addEventListener('change', () => {
-              filterModality(data.records);   
-      });
-    })
+
+     })
     .catch(error => {
       console.error('Error fetching data:', error);
     });
@@ -214,42 +257,64 @@ function createCardDiv(record) {
   rowDiv.appendChild(contentColumn);
   return cardDiv;
 }
+
+
+
+
+
 //Getting Filter Data
 function filterData(records) {
+  console.log("getting filter data", records);
+  console.log("records selected major", selectedMajor);
   const modalityFilter = document.getElementById('modalityFilter');
   const typeFilter = document.getElementById('typeFilter');
   const ageFilter = document.getElementById('ageFilter');
-
+  
   const modalityCriteria = modalityFilter.value;
   const typeCriteria = typeFilter.value;
   const ageCriteria = parseInt(ageFilter.value);
+  // console.log("type filter", typeCriteria);
+
 
   // Filter the records based on the selected filter criteria
   const filteredRecords = records.filter(record => {
     const modality = record.fields['In Person / Remote'] || '';
     const type = record.fields['Type of Volunteer Work'] || '';
     const age = parseInt(record.fields['Minimum Age'] || 0);
+    const relatedMajors = record.fields['Related Major'] || [];
+    // console.log("type", type);
+    // console.log("major", relatedMajors);
 
     // Check if the record matches the selected filter criteria
     const modalityMatch = modalityCriteria === '' || modality === modalityCriteria;
     const typeMatch = typeCriteria === '' || type === typeCriteria;
     const ageMatch = isNaN(ageCriteria) || (ageCriteria === 0 && age === 0) || (ageCriteria > 0 && age <= ageCriteria);
-    
-    return modalityMatch && typeMatch && ageMatch;
+    const majorMatch = !selectedMajor || selectedMajor.includes('Related Major') || selectedMajor.some(major => relatedMajors.includes(major));
+    return modalityMatch && typeMatch && ageMatch && majorMatch;
   });
 
   return filteredRecords;
 }
 
+
+
+
   function renderFilteredData(filteredData) {
     const dataContainer = document.getElementById('dataList');
     dataContainer.innerHTML = '';
   
-    // Render the filtered cards
-    filteredData.forEach(record => {
-      const cardDiv = createCardDiv(record);
-      dataContainer.appendChild(cardDiv);
-    });
+    if (filteredData.length === 0) {
+      // Create a message element to display the "No results found" message
+      const messageElement = document.createElement('p');
+      messageElement.textContent = 'No results found';
+      dataContainer.appendChild(messageElement);
+    } else {
+      // Render the filtered cards
+      filteredData.forEach(record => {
+        const cardDiv = createCardDiv(record);
+        dataContainer.appendChild(cardDiv);
+      });
+    }
   }
   
   // Call fetchDataCard to start fetching and rendering data
