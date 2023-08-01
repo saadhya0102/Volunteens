@@ -281,12 +281,37 @@ function displayRecordData(record) {
     }
 
     //Notes
-    //const noteLabel = document.createElement('label');
-    //noteLabel.textContent = 'Notes:';
-    //const noteValue = document.createElement('p');
-    //noteValue.textContent = record.fields['Notes'] || '';
-    //learnMoreDetailDiv.appendChild(noteLabel);
-    //learnMoreDetailDiv.appendChild(noteValue);
+    const notesValue = document.createElement('p');
+    notesValue.textContent = record.fields['Notes'] || '';
+    if(notesValue.textContent.length !== 0)
+    {
+      const notesLabel = document.createElement('label');
+      notesLabel.textContent = 'Special Notes: '; 
+      learnMoreDetailDiv.appendChild(notesLabel);
+      learnMoreDetailDiv.appendChild(notesValue);
+    }
+
+    //Spot
+    const spotValue = document.createElement('p');
+    spotValue.textContent = record.fields['Spot'] || '';
+    if(spotValue.textContent.length !== 0)
+    {
+      const spotLabel = document.createElement('label');
+      spotLabel.textContent = 'Spot Information: '; 
+      learnMoreDetailDiv.appendChild(spotLabel);
+      learnMoreDetailDiv.appendChild(spotValue);
+    }
+
+    //Commitment Requirements
+    const commitValue = document.createElement('p');
+    commitValue.textContent = record.fields['Commitment Requirement'] || '';
+    if(commitValue.textContent.length !== 0)
+    {
+      const commitLabel = document.createElement('label');
+      commitLabel.textContent = 'Commitment Requirements: '; 
+      learnMoreDetailDiv.appendChild(commitLabel);
+      learnMoreDetailDiv.appendChild(commitValue);
+    }
 
     //Schedule
     const scheduleLabel = document.createElement('label');
@@ -324,9 +349,11 @@ function displayRecordData(record) {
     const moreInfoLabel = document.createElement('label');
     moreInfoLabel.textContent = 'More Information:';
     const moreInfoValue = document.createElement('p');
-    moreInfoValue.textContent = record.fields['More Information'] || '';
+    const tempLinkVal = record.fields['More Information'] || '';
+    moreInfoValue.innerHTML = `<a href="${tempLinkVal}">Click Me</a>`;
     learnMoreDetailDiv.appendChild(moreInfoLabel);
     learnMoreDetailDiv.appendChild(moreInfoValue);
+
 
     //Learn More Detail to Learn More Container
     containerLearnMoreDiv.appendChild(learnMoreDetailDiv);
