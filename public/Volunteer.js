@@ -1,15 +1,11 @@
 function menu() {
   const menuIcon = document.getElementById('menu-icon');
   const navbar = document.querySelector('.navbar');
-
   menuIcon.addEventListener('click', function() {
     menuIcon.classList.toggle('bx-x');
     navbar.classList.toggle('open');
   });
 }
-
-
-
 function fetchDataCard() {
   showLoading();
   // Retrieve data from Airtable
@@ -24,10 +20,8 @@ function fetchDataCard() {
       // Generate cards with data from Airtable
       const dataContainer = document.getElementById('dataList');
       dataContainer.innerHTML = '';
-
       let filteredData = data.records; // Initial data is unfiltered
       console.log('Initial data:', filteredData);
-
       // Render the initial cards
       filteredData.forEach(record => {
         const cardDiv = createCardDiv(record);
@@ -38,7 +32,7 @@ function fetchDataCard() {
             if (user) {
               // User is logged in, fetch the firebaseUserId
               const firebaseUserId = user.uid;
-      
+
               // Fetch the current user's like status for all opportunities
               fetchUserLikedOpportunities(firebaseUserId)
                 .then(likedOpportunities => {
@@ -57,7 +51,7 @@ function fetchDataCard() {
                   console.error('Error fetching user liked opportunities:', error);
                 });
             }
-      
+
       hideLoading();
 
       // Add event listeners to the filters
@@ -80,84 +74,62 @@ function fetchDataCard() {
       const modalityFilter = document.getElementById('modalityFilter');
             modalityFilter.addEventListener('change', () => {
               filterModality(data.records);   
-      })
+      });
     })
-
     .catch(error => {
       console.error('Error fetching data:', error);
     });
 }
-
-
-
 function createCardDiv(record) {
   const cardDiv = document.createElement('div');
   cardDiv.classList.add('col-12','custom-card');
-
   const cardBody = document.createElement('div');
   cardBody.classList.add('card', 'mb-3');
-
   const rowDiv = document.createElement('div');
   rowDiv.classList.add('row', 'no-gutters');
-
   const imageColumn = document.createElement('div');
   imageColumn.classList.add('col-md-4');
-
   const cardImage = document.createElement('img');
   cardImage.classList.add('card-image');
   cardImage.src = record.fields['Picture'] || '';
-
   cardDiv.appendChild(cardBody);
   cardBody.appendChild(rowDiv);
   imageColumn.appendChild(cardImage);
   rowDiv.appendChild(imageColumn);
-
   const contentColumn = document.createElement('div');
   contentColumn.classList.add('col-md-8');
-
   const cardBodyInner = document.createElement('div');
   cardBodyInner.classList.add('card-body');
-
   const cardTitle = document.createElement('h3');
   cardTitle.classList.add('card-title');
   cardTitle.textContent = record.fields['Name of Volunteer Opportunity'] || '';
-
   const cardOrganization = document.createElement('p');
   cardOrganization.classList.add('card-organization');
   cardOrganization.textContent = record.fields['Organization'] || '';
-
   const cardOverview = document.createElement('p');
   cardOverview.classList.add('card-overview');
   cardOverview.textContent = record.fields['Overview'] || '';
-
   const cardLocation = document.createElement('p');
   cardLocation.classList.add('card-location');
   cardLocation.textContent = record.fields['Location'] || '';
-
   const cardInPersonOrRemote = document.createElement('p');
   cardInPersonOrRemote.classList.add('card-inPersonOrRemote');
   cardInPersonOrRemote.textContent = record.fields['In Person / Remote'] || '';
-
   const cardAge = document.createElement('p');
   cardAge.classList.add('card-age');
   cardAge.textContent = record.fields['Age'] || '';
-
   const buttonWrapper = document.createElement('div');
   buttonWrapper.classList.add('button-wrapper');
-
   const firstButton = document.createElement('button');
   firstButton.classList.add('card-button');
   firstButton.textContent = 'Learn More';
-
   const secondButton = document.createElement('button');
   secondButton.classList.add('card-button');
   secondButton.textContent = 'Apply Now';
-
   // Create the like button
   const likeButton = document.createElement('button');
   likeButton.innerHTML = ' <i class="fa-solid fa-heart"></i>';
   likeButton.classList.add('like-button');
-
       // Check if the user is logged in
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
@@ -202,20 +174,17 @@ function createCardDiv(record) {
           likeButton.classList.remove('liked');
         }
       });
-
     // Add event listener to the Like button
     likeButton.addEventListener('click', () => {
       console.log("record", record);
       handleLikeButtonClick(record,likeButton);
     });
   
-
   // Add event listeners to the buttons
   firstButton.addEventListener('click', () => {
     // Handle first button click event here
     window.location.href = `LearnMore.html?id=${record.id}`;
   });
-
   secondButton.addEventListener('click', () => {
     // Check if the user is logged in
     firebase.auth().onAuthStateChanged((user) => {
@@ -231,12 +200,9 @@ function createCardDiv(record) {
       }
     });
   });
-
   buttonWrapper.appendChild(firstButton);
   buttonWrapper.appendChild(secondButton);
   buttonWrapper.appendChild(likeButton);
-
-
   contentColumn.appendChild(cardBodyInner);
   cardBodyInner.appendChild(cardTitle);
   cardBodyInner.appendChild(cardOrganization);
@@ -245,50 +211,35 @@ function createCardDiv(record) {
   cardBodyInner.appendChild(cardAge);
   cardBodyInner.appendChild(cardInPersonOrRemote);
   cardBodyInner.appendChild(buttonWrapper);
-
   rowDiv.appendChild(contentColumn);
-
-
   return cardDiv;
 }
-
-
-function getSelectedOptions(selectElement) {
-  const selectedOptions = Array.from(selectElement.selectedOptions);
-  return selectedOptions.map(option => option.value);
-}
-
+//Getting Filter Data
 function filterData(records) {
   const modalityFilter = document.getElementById('modalityFilter');
   const typeFilter = document.getElementById('typeFilter');
   const ageFilter = document.getElementById('ageFilter');
-  const majorFilter = $('#majorFilter');
 
   const modalityCriteria = modalityFilter.value;
   const typeCriteria = typeFilter.value;
   const ageCriteria = parseInt(ageFilter.value);
-  const majorCriteria = majorFilter.val();  // Get the selected options as an array
 
   // Filter the records based on the selected filter criteria
   const filteredRecords = records.filter(record => {
     const modality = record.fields['In Person / Remote'] || '';
     const type = record.fields['Type of Volunteer Work'] || '';
     const age = parseInt(record.fields['Minimum Age'] || 0);
-    const majors = record.fields['Related Majors'] || [];  // This should be an array
 
     // Check if the record matches the selected filter criteria
     const modalityMatch = modalityCriteria === '' || modality === modalityCriteria;
     const typeMatch = typeCriteria === '' || type === typeCriteria;
     const ageMatch = isNaN(ageCriteria) || (ageCriteria === 0 && age === 0) || (ageCriteria > 0 && age <= ageCriteria);
-    const majorMatch = majorCriteria.length === 0 || majorCriteria.some(major => majors.includes(major));  // Check if any of the selected majors is in the record's majors
-
-    return modalityMatch && typeMatch && ageMatch && majorMatch;
+    
+    return modalityMatch && typeMatch && ageMatch;
   });
 
   return filteredRecords;
 }
-
-
 
   function renderFilteredData(filteredData) {
     const dataContainer = document.getElementById('dataList');
@@ -303,12 +254,9 @@ function filterData(records) {
   
   // Call fetchDataCard to start fetching and rendering data
   fetchDataCard();
-
-
   // ... (previous code)
   
   
-
 function fetchUserRecordByFirebaseId(firebaseUserId) {
   // Make a request to fetch the user record based on the Firebase user ID
   return fetch(`https://api.airtable.com/v0/appVuPVt4NexTjNPj/User?filterByFormula={ID}="${firebaseUserId}"`, {
@@ -327,7 +275,6 @@ function fetchUserRecordByFirebaseId(firebaseUserId) {
       return null;
     });
 }
-
 function updateVolunteerOpportunityRecord(recordId, updatedFields) {
   // Make a PATCH request to update the Volunteer Opportunity record
   fetch(`https://api.airtable.com/v0/appVuPVt4NexTjNPj/Volunteer%20Opportunity/${recordId}`, {
@@ -346,18 +293,15 @@ function updateVolunteerOpportunityRecord(recordId, updatedFields) {
       console.error('Error updating Volunteer Opportunity record:', error);
     });
 }
-
 // Function to handle liking and unliking a volunteer opportunity
 function handleLikeButtonClick(record,likeButton) {
   const user = firebase.auth().currentUser;
   const firebaseUserId = user ? user.uid : null;
-
   if (!firebaseUserId) {
     alert('Please log in to like the volunteer opportunity.');
     window.location.href = 'myAccount.html';
     return;
   }
-
   fetchUserRecordByFirebaseId(firebaseUserId)
     .then(userRecord => {
       console.log("checking 2");
@@ -365,11 +309,9 @@ function handleLikeButtonClick(record,likeButton) {
         console.error('User record not found for the given Firebase user ID.');
         return;
       }
-
       const userRecordId = userRecord.id;
       const peopleLiked = record.fields['People Liked'] || [];
       const liked = peopleLiked.includes(userRecordId);
-
       if (liked) {
         // If the user already liked the opportunity, remove the link
         likeButton.classList.remove('liked');
@@ -404,8 +346,6 @@ function handleLikeButtonClick(record,likeButton) {
       console.error('Error fetching user record:', error);
     });
 }
-
-
 function fetchUserLikedOpportunities(firebaseUserId) {
   // Fetch the user record based on the Firebase user ID
   return fetchUserRecordByFirebaseId(firebaseUserId)
@@ -414,7 +354,6 @@ function fetchUserLikedOpportunities(firebaseUserId) {
         console.error('User record not found for the given Firebase user ID.');
         return [];
       }
-
       // Get the list of liked opportunity IDs from the user record
       return userRecord.fields['Liked Opportunities'] || [];
     })
@@ -423,13 +362,11 @@ function fetchUserLikedOpportunities(firebaseUserId) {
       return [];
     });
 }
-
 // loading function
 function showLoading() {
   const loadingContainer = document.getElementById('loadingSpinner');
   loadingContainer.style.display = 'block';
 }
-
 function hideLoading() {
   const loadingContainer = document.getElementById('loadingSpinner');
   loadingContainer.style.display = 'none';
