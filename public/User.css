@@ -51,7 +51,7 @@ body {
 
 
 /* SIDEBAR */
-#sidebar {
+/* #sidebar {
 	margin-top: 60px;
 	position: fixed;
 	top: 0;
@@ -64,7 +64,25 @@ body {
 	transition: .3s ease;
 	overflow-x: hidden;
 	scrollbar-width: none;
+} */
+
+#sidebar {
+    margin-top: 60px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    /* Remove fixed height and set a maximum height */
+    height: 100%;
+    max-height: calc(100% - 60px); /* Ensure there's enough space for the "Log Out" button */
+    overflow-y: auto; /* Enable vertical scrolling when needed */
+    background: var(--light);
+    z-index: 2000;
+    font-family: var(--lato);
+    transition: .3s ease;
+    scrollbar-width: none;
 }
+
 #sidebar::--webkit-scrollbar {
 	display: none;
 }
@@ -108,6 +126,7 @@ body {
 #sidebar .side-menu {
 	width: 100%;
 	/* margin-top: 48px; */
+	
 }
 
 #sidebar .divider {
@@ -168,7 +187,6 @@ body {
 	border-radius: 48px;
 	font-size: 16px;
 	color: var(--dark);
-	white-space: nowrap;
 	overflow-x: hidden;
 }
 #sidebar .side-menu.top li.active a {
@@ -188,6 +206,9 @@ body {
 	display: flex;
 	justify-content: center;
 }
+#sidebar .side-menu li a span {
+	white-space: normal;
+  }
 /* SIDEBAR */
 
 
@@ -207,9 +228,11 @@ body {
     transition: all .3s ease;
     border-radius: 5px;
     font-weight: 600;
-    margin-bottom: 12px;
-    position: sticky;
-    bottom: 0;
+    /* margin-bottom: 12px; */
+    /* position: sticky;  */
+    /* bottom: 0; */
+	position: sticky;
+    bottom: 15px; /* Adjust the value according to your preference */
 }
 
 #sidebar .btn-logout:hover {
@@ -239,17 +262,97 @@ body {
 	color: var(--dark);
 }
 
+
+@media screen and (max-width: 1090px) {
+	#sidebar {
+		width: 200px;
+	}
+	#sidebar .brand{
+		margin-top: 20px;
+	}
+	#content {
+		width: calc(100% - 60px);
+		left: 200px;
+		margin-top: 100px;
+	}
+	#sidebar .side-menu li{
+		margin-left: -20px;
+	}
+	#sidebar .side-menu li a{
+		font-size: 13px;
+	}
+	#sidebar .bx.bx-menu {
+		margin-left: 20px;
+		cursor: pointer;
+		color: var(--dark);
+	}
+}
+
+@media screen and (max-width: 780px) {
+	#sidebar .side-menu {
+		width: 100%;
+		/* margin-top: -10px; */
+	}
+	
+	#sidebar.hide {
+		width: 70px;
+	}
+	#sidebar {
+		width: 150px;
+	}
+	#sidebar .brand{
+		margin-top: 0px;
+	}
+	#content {
+		width: calc(100% - 40px);
+		left: 150px;
+		margin-top: 100px;
+	}
+	#sidebar .side-menu li{
+		margin-left: -20px;
+		margin-top: 0px;
+	}
+	#sidebar .side-menu li a{
+		font-size: 13px;
+	}
+
+	#sidebar .bx.bx-menu{
+		display: inline-block;
+		margin-left: 20px;
+		cursor: pointer;
+		color: var(--dark);
+		margin-left: 0px;
+		transform: translateX(-150%);
+	  }
+	  #sidebar .brand span {
+		opacity: 0;
+	  }
+
+
+	   #sidebar .btn-logout {
+		margin-left: 3.5px;
+	}
+	
+}
+
+
 /* table styling */
-  
+
+#content h2{
+	text-align: center;
+	color: black;
+	font-weight: bold;
+}
 table {
-	width: 100%;
-	/* margin-left: 50px;
-	margin-right: 100px; */
+	margin-top: 30px;
+	width: 90%;
+	margin-left: 50px;
+	margin-right: 50px;
 	border-collapse: collapse;
-	max-width: 100%;
+	max-width: 90%;
 	overflow-x: auto;
   }
-  
+
 table th,
 table td {
 	padding: 8px;
@@ -258,10 +361,13 @@ table td {
 	min-width: 100px;
   }
 
+  table td{
+	color: black;
+  }
 
-  
  table th {
-	background-color: #f2f2f2;
+	background-color: #FF6969;
+	color: white; 
   }
   
 table tbody tr:hover {
@@ -289,35 +395,203 @@ input.small-input {
 	width: 70px; /* Adjust the width as needed */
   }
 
-@media screen and (max-width: 768px) {
-	#sidebar {
-		width: 200px;
+	/* Responsive table layout for smaller screens */
+@media screen and (max-width: 1440px) {
+	table {
+		width: 100%; /* Set the table width to 100% to make it responsive */
 	}
 
-	#content {
-		width: calc(100% - 60px);
-		left: 200px;
+	table th,
+	table td {
+		min-width: auto; /* Allow table cells to adjust their width based on content */
+		width: auto;
 	}
 
-	/* #content nav .nav-link {
-		display: none;
-	} */
+	/* Add some spacing and styling to improve readability */
+	table tbody tr {
+		border-bottom: 1px solid #ddd;
+	}
+
+	table tbody td:before {
+		/* content: attr(data-title); */
+		font-weight: bold;
+		display: block;
+	}
+
+	input[type="text"].input-field,
+	input[type="number"].input-field,
+	input[type="date"].input-field,
+	select.input-field {
+		width: 100%; /* Set the input fields to 100% width for responsiveness */
+	}
+}
+
+/* Responsive table layout for even smaller screens */
+@media screen and (max-width: 1300px) {
+	table {
+		font-size: 14px; /* Reduce font size to fit the table on the screen */
+	}
+
+	/* Add some spacing and styling to improve readability */
+	table tbody td:before {
+		font-size: 12px; /* Adjust font size for the data labels */
+	}
+
+	input[type="text"].input-field,
+	input[type="number"].input-field,
+	input[type="date"].input-field,
+	select.input-field {
+		width: 100%; /* Set the input fields to 100% width for responsiveness */
+	}
+	#current-table table {
+		font-size: 14px; /* Reduce font size to fit the table on the screen */
+	}
+
+	#current-table table th,
+	#current-table table td {
+		padding: 5px; /* Reduce cell padding for the table */
+	}
+
+	/* Add some spacing and styling to improve readability */
+	#current-table table tbody td:before {
+		font-size: 12px; /* Adjust font size for the data labels */
+	}
+
+	input[type="text"].input-field,
+	input[type="number"].input-field,
+	input[type="date"].input-field,
+	select.input-field {
+		width: 100%; /* Set the input fields to 100% width for responsiveness */
+	}
 }
 
 
+/* Specific media query for table layout between 1090px and 1200px */
+@media screen and (min-width: 1090px) and (max-width: 1200px) {
+	table th,
+	table td {
+		padding: 5px; /* Reduce cell padding for the tables */
+		font-size: 13px; /* Reduce font size for the tables */
+	}
+
+	/* Add some spacing and styling to improve readability */
+	table tbody tr {
+		border-bottom: 1px solid #ddd;
+	}
+
+	table tbody td:before {
+		content: attr(data-label);
+		font-weight: bold;
+		display: block;
+		font-size: 13px; /* Adjust font size for the data labels */
+	}
+
+	input[type="text"].input-field,
+	input[type="number"].input-field,
+	input[type="date"].input-field,
+	select.input-field {
+		width: 80%; /* Reduce the width of input fields for better fit */
+	}
+}
+/* Regular styling for larger screens */
+.table-container {
+	overflow-x: hidden; /* Hide horizontal scrollbar initially */
+  }
+  
+/* Media query for screens smaller than 1090px */
+@media screen and (min-width: 420px) and (max-width: 1090px) {
+
+	.table-container {
+	  /* Set the width to the desired value */
+	  width: 100%;
+	  /* Enable horizontal scrolling */
+	  overflow-x: auto;
+	}
+  
+	table {
+	  /* Set the table width to at least the width of the table container */
+	  /* This is important for the horizontal scrolling to work properly */
+	  min-width: 100%;
+	}
+  }
+
+
+@media screen and (max-width: 420px) {
+	table{
+		/* border: 3px solid darkgray; */
+		width: 90%;
+		margin-left: 15px;
+		margin-right: 15px;
+		border-collapse: collapse; /* Remove spacing between cells */
+
+	}
+
+	table thead tr{
+		display: none;
+	}
+
+	table tr{
+		display: block;
+	}
+
+	table tbody tr {
+		border-bottom: 5px solid darkgray; /* Add a line between each row */
+		margin-bottom: 10px; /* Add some spacing between rows */
+	  }
+
+	table th, table td{
+		padding: .5em;
+	}
+
+	table th, table td{
+		text-align:right;
+		display: block;
+	}
+
+	table td{
+		color: black;
+	}	
+
+	table td::before{
+		content: attr(data-title);
+		float: left;
+    	margin-right: 5px;
+		color:#E74646;
+		font-weight: bold;
+		font-size: 20px;
+	}
+
+		input[type="text"].input-field,
+	input[type="number"].input-field,
+	input[type="date"].input-field,
+	select.input-field {
+		width: 50%; /* Set the input fields to 100% width for responsiveness */
+	}
+
+}
+  
+
+
+  
+  
 
 /* Card design */
 .card {
     width: 90%;
     margin-left: 5%;
+	display:flex;
+	justify-content: center;
+	
   }
   
   .card-image {
     max-width: 325px;
     height: auto;
-    margin-left: 10%;
     position: center;
-	margin-top: 50px;
+	margin-top: 20px;
+	display: block;
+	margin-left: auto;
+  	margin-right: auto;
   }
   
   .card-title {
@@ -393,7 +667,33 @@ input.small-input {
     display: flex;
     gap: 20px;
  }
+ 
+ @media screen and (max-width: 1400px) {
+	.card-image {
+		max-width: 270px;
+		height: auto;
+		position: center;
+		margin-top: 50px;
+	  }
+ }
 
+ @media screen and (max-width: 1200px) {
+	.card-image {
+		max-width: 240px;
+		height: auto;
+		position: center;
+		margin-top: 50px;
+	  }
+ }
+ @media screen and (max-width: 850px) {
+	.card-image {
+		max-width: 220px;
+		height: auto;
+		position: center;
+		margin-top: 50px;
+	  }
+ }
+ 
 
 
 
@@ -421,6 +721,9 @@ input.small-input {
 	margin-bottom: 10px;
   }
   
+  #account-settings p{
+	color: black;
+  }
   #account-settings div {
 	margin-bottom: 10px;
   }
@@ -472,3 +775,13 @@ input.small-input {
   .contact{
 	margin-top: -150px;
   }
+
+
+  @media screen and (max-width: 420px) {
+	.contactInfo p{
+		font-size: 12px;
+	}
+  }
+
+  /* Responsive */
+
