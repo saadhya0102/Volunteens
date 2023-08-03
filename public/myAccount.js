@@ -1,12 +1,14 @@
 function menu() {
     const menuIcon = document.getElementById('menu-icon');
     const navbar = document.querySelector('.navbar');
-  
+    navbar.classList.add('open');
+
     menuIcon.addEventListener('click', function() {
       menuIcon.classList.toggle('bx-x');
       navbar.classList.toggle('open');
     });
   }
+  menu();
 
   const forms = document.querySelector(".forms");
   const pwShowHide = document.querySelectorAll(".fa-solid.fa-eye-slash");

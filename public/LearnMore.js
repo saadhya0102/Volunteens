@@ -1,6 +1,7 @@
 function menu() {
   const menuIcon = document.getElementById('menu-icon');
   const navbar = document.querySelector('.navbar');
+  navbar.classList.add('open');
 
   menuIcon.addEventListener('click', function() {
     menuIcon.classList.toggle('bx-x');
@@ -194,7 +195,7 @@ function displayRecordData(record) {
     relatedMajorIcon.innerHTML = '<i class="fa-solid fa-graduation-cap"></i>';
     relatedMajorIcon.classList.add('icon');
     const relatedMajorText = document.createElement('p');
-    relatedMajorText.textContent = record.fields['Related Major '] || '';
+    relatedMajorText.textContent = record.fields['Related Major'] || '';
     relatedMajorText.classList.add('text');
     relatedMajorBoxDiv.appendChild(relatedMajorIcon);
     relatedMajorBoxDiv.appendChild(relatedMajorText);

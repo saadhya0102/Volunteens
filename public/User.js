@@ -1,12 +1,13 @@
 function menu() {
 	const menuIcon = document.getElementById('menu-icon');
 	const navbar = document.querySelector('.navbar');
-  
+	navbar.classList.add('open');
+
 	menuIcon.addEventListener('click', function() {
 	  navbar.classList.toggle('open');
 	});
   }
-  
+
 
   
   function sidebarMenu() {
@@ -98,7 +99,7 @@ function menu() {
   const urlParams = new URLSearchParams(window.location.search);
   const userId = urlParams.get('userId');
   console.log('User ID:', userId);
-  
+
   function fetchUserDataById(userId) {
 	const query = `filterByFormula={ID}='${userId}'&maxRecords=1`;
 	const userEndpoint = `${airtableEndpoint}/User`;
@@ -116,7 +117,7 @@ function menu() {
 	  if (data.records && data.records.length > 0) {
 		const record = data.records[0];
 		const user = record.fields; // Extract the user data from the record
-		console.log('Fetched User Data:', user);
+		console.log('Fetched User Data2:', user);
 		return user; // Return the user data
 	  } else {
 		throw new Error('No matching record found for the provided userId');
@@ -180,62 +181,7 @@ function menu() {
   
 
 
-// Fetch User Data and handle Volunteer Opportunities and Application Statistics
-fetchUserDataById(userId)
-  .then(user => {
-	showLoading();
-    const volunteerOpportunityIds = user['All Volunteer Experience'];
-    const applicationStatisticsIds = user['Application'];
-	const likedVolunteerOpportunityIds = user['Liked Volunteer Opportunity'] || [];
-	displayAccountData(user);
 
-    // Fetch Volunteer Opportunities
-    if (volunteerOpportunityIds && volunteerOpportunityIds.length > 0) {
-      fetchVolunteerOpportunities(volunteerOpportunityIds)
-        .then(volunteerOpportunities => {
-          console.log('Volunteer Opportunities:', volunteerOpportunities);
-
-          // Fetch Application Statistics
-          if (applicationStatisticsIds && applicationStatisticsIds.length > 0) {
-            fetchApplicationStatistics(applicationStatisticsIds)
-              .then(applicationStatistics => {
-                console.log('Application Statistics:', applicationStatistics);
-
-                const combinedData = combineVolunteerAndApplicationData(
-                  volunteerOpportunities,
-                  applicationStatistics
-                );
-
-                console.log("Combined Data:", combinedData);
-				displayOverviewData(user, combinedData);
-				displayAppliedData(combinedData);
-				displayCurrentData(combinedData);
-				displayPastData(combinedData);
-				displayLikedData(likedVolunteerOpportunityIds);
-				hideLoading();
-              })
-              .catch(error => {
-                console.error('Error fetching application Statistics:', error);
-              });
-          } else {
-            console.log('No application Statistics found for the user.');
-          }
-        })
-        .catch(error => {
-          console.error('Error fetching volunteer opportunities:', error);
-        });
-    } else {
-      console.log('No Volunteer Opportunities found for the user.');
-	  		displayNoOpportunitiesMessage('volunteer-table');
-			displayNoOpportunitiesMessage('applied-table');
-			displayNoOpportunitiesMessage('current-table');
-			displayNoOpportunitiesMessage('past-table');
-			hideLoading(); // Hide the loading spinner if no volunteer opportunities are found
-	 }
-   })
-  .catch(error => {
-    console.error('Error fetching user data:', error);
-  });
 
  // Function to combine Volunteer Opportunities and Application Statistics data
  function combineVolunteerAndApplicationData(volunteerOpportunities, applicationStatistics) {
@@ -706,6 +652,7 @@ function displayCurrentData(combinedData) {
   
 // Function to display the liked volunteer opportunities as cards in the "Favorites/Considering" section
 function displayLikedData(likedVolunteerOpportunityIds) {
+	console.log("displaying liked now");
 	// Fetch the liked volunteer opportunities
 	const volunteerEndpoint = `${airtableEndpoint}/Volunteer Opportunity`;
   
@@ -1128,3 +1075,64 @@ function showLoading() {
 	loadingSpinner.style.display = 'none';
   }
   
+
+
+console.log("before test");
+  // Fetch User Data and handle Volunteer Opportunities and Application Statistics
+fetchUserDataById(userId)
+.then(user => {
+  showLoading();
+  const volunteerOpportunityIds = user['All Volunteer Experience'];
+  const applicationStatisticsIds = user['Application'];
+  const likedVolunteerOpportunityIds = user['Liked Volunteer Opportunity'] || [];
+  displayAccountData(user);
+  displayLikedData(likedVolunteerOpportunityIds);
+
+
+
+  // Fetch Volunteer Opportunities
+  if (volunteerOpportunityIds && volunteerOpportunityIds.length > 0) {
+	fetchVolunteerOpportunities(volunteerOpportunityIds)
+	  .then(volunteerOpportunities => {
+		console.log('Volunteer Opportunities:', volunteerOpportunities);
+
+		// Fetch Application Statistics
+		if (applicationStatisticsIds && applicationStatisticsIds.length > 0) {
+		  fetchApplicationStatistics(applicationStatisticsIds)
+			.then(applicationStatistics => {
+			  console.log('Application Statistics:', applicationStatistics);
+
+			  const combinedData = combineVolunteerAndApplicationData(
+				volunteerOpportunities,
+				applicationStatistics
+			  );
+
+			  console.log("Combined Data:", combinedData);
+			  displayOverviewData(user, combinedData);
+			  displayAppliedData(combinedData);
+			  displayCurrentData(combinedData);
+			  displayPastData(combinedData);
+			  hideLoading();
+			})
+			.catch(error => {
+			  console.error('Error fetching application Statistics:', error);
+			});
+		} else {
+		  console.log('No application Statistics found for the user.');
+		}
+	  })
+	  .catch(error => {
+		console.error('Error fetching volunteer opportunities:', error);
+	  });
+  } else {
+	console.log('No Volunteer Opportunities found for the user.');
+			displayNoOpportunitiesMessage('volunteer-table');
+		  displayNoOpportunitiesMessage('applied-table');
+		  displayNoOpportunitiesMessage('current-table');
+		  displayNoOpportunitiesMessage('past-table');
+		  hideLoading(); // Hide the loading spinner if no volunteer opportunities are found
+   }
+ })
+.catch(error => {
+  console.error('Error fetching user data:', error);
+});

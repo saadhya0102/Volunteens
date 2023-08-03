@@ -142,19 +142,19 @@
     }
   }
 
-  /*Navbar Size Adjustment
-  .navbar{
-    width: 90%;
-    position: absolute;
-    left: 5%;
-    height: 205%;
+  @media screen and (max-width: 768px) {
+    .learn-more-container {
+      flex-direction: column; /* Stack the divs on top of each other */
+      align-items: center; /* Optional: To center the divs horizontally */
+    }
+  
+    .learn-more-info {
+      width: 100%; /* Take up full width when stacked */
+      margin-right: 0; /* Remove margin for stacking */
+    }
   }
-*/
-/*
-  .card-organization, .card-overview, .card-location, .card-age, .card-inPersonOrRemote{
-    font-size: large;
-  }
-  */
+
+
 
 
   @media (max-width: 1400px) {
