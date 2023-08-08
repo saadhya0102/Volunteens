@@ -24,56 +24,6 @@ function fetchRecordById(recordId) {
       });
   }
 
-  // function processRichTextFormatting(content) {
-  //   // Process hyperlinks
-  //   content = content.replace(/<a href="([^"]+)">([^<]+)<\/a>/g, '<a href="$1">$2</a>');
-  
-  //   // Process headers
-  //   content = content.replace(/<h1>(.*?)<\/h1>/g, '<h1>$1</h1>');
-  //   content = content.replace(/<h2>(.*?)<\/h2>/g, '<h2>$1</h2>');
-  //   // ... process other headers similarly
-  
-  //   // Process unordered lists
-  //   content = content.replace(/<ul>(.*?)<\/ul>/g, (match, listContent) => {
-  //     const listItems = listContent.split('<li>').slice(1); // Split into individual list items
-  //     const formattedListItems = listItems.map(item => `<li>${item}`);
-  //     return `<ul>${formattedListItems.join('')}</ul>`;
-  //   });
-  
-  //   // Process line breaks
-  //   content = content.replace(/\n/g, '<br>');
-  
-  //   // ... process other formatting as needed
-  
-  //   return content;
-  // }
-
-//   function processRichTextFormatting(content) {
-//   // Process hyperlinks
-//   content = content.replace(/<a href="([^"]+)">([^<]+)<\/a>/g, '<a href="$1">$2</a>');
-
-//   // Process headers
-//   content = content.replace(/<h1>(.*?)<\/h1>/g, '<h1>$1</h1>');
-//   content = content.replace(/<h2>(.*?)<\/h2>/g, '<h2>$1</h2>');
-//   // ... process other headers similarly
-
-//   // Process unordered lists
-//   content = content.replace(/<ul>(.*?)<\/ul>/g, (match, listContent) => {
-//     const listItems = listContent.split('<li>').slice(1); // Split into individual list items
-//     const formattedListItems = listItems.map(item => `<li>${item}</li>`); // Add <li> tags
-//     return `<ul>${formattedListItems.join('')}</ul>`;
-//   });
-
-//   // Process bold text
-//   content = content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-
-//   // Process line breaks
-//   content = content.replace(/\n/g, '<br>');
-
-//   // ... process other formatting as needed
-
-//   return content;
-// }
 
 
 function processRichTextFormatting(content) {
@@ -393,14 +343,13 @@ function displayRecordData(record) {
       learnMoreDetailDiv.appendChild(spotValue);
     }
 
-    //Commitment Requirements
-    const commitValue = document.createElement('div');
-    // commitValue.textContent = record.fields['Commitment Requirement'] || '';
-    commitValue.innerHTML = processRichTextFormatting(record.fields['Commitment Requirement'] || '');
-    if(commitValue.textContent.length !== 0)
-    {
+    // Commitment Requirements
+    const commitValue = document.createElement('p');
+    // commitValue.textContent = record.fields['Commitment Requirement '] || '';
+    commitValue.innerHTML = processRichTextFormatting(record.fields['Commitment Requirement '] || '');
+    if(commitValue.textContent.length !== 0){
       const commitLabel = document.createElement('label');
-      commitLabel.textContent = 'Commitment Requirements: '; 
+      commitLabel.textContent = 'Commitment Requirements: ';
       learnMoreDetailDiv.appendChild(commitLabel);
       learnMoreDetailDiv.appendChild(commitValue);
       learnMoreDetailDiv.appendChild(document.createElement('br'));
