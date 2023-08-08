@@ -23,6 +23,80 @@ function fetchRecordById(recordId) {
         return data;
       });
   }
+
+  // function processRichTextFormatting(content) {
+  //   // Process hyperlinks
+  //   content = content.replace(/<a href="([^"]+)">([^<]+)<\/a>/g, '<a href="$1">$2</a>');
+  
+  //   // Process headers
+  //   content = content.replace(/<h1>(.*?)<\/h1>/g, '<h1>$1</h1>');
+  //   content = content.replace(/<h2>(.*?)<\/h2>/g, '<h2>$1</h2>');
+  //   // ... process other headers similarly
+  
+  //   // Process unordered lists
+  //   content = content.replace(/<ul>(.*?)<\/ul>/g, (match, listContent) => {
+  //     const listItems = listContent.split('<li>').slice(1); // Split into individual list items
+  //     const formattedListItems = listItems.map(item => `<li>${item}`);
+  //     return `<ul>${formattedListItems.join('')}</ul>`;
+  //   });
+  
+  //   // Process line breaks
+  //   content = content.replace(/\n/g, '<br>');
+  
+  //   // ... process other formatting as needed
+  
+  //   return content;
+  // }
+
+//   function processRichTextFormatting(content) {
+//   // Process hyperlinks
+//   content = content.replace(/<a href="([^"]+)">([^<]+)<\/a>/g, '<a href="$1">$2</a>');
+
+//   // Process headers
+//   content = content.replace(/<h1>(.*?)<\/h1>/g, '<h1>$1</h1>');
+//   content = content.replace(/<h2>(.*?)<\/h2>/g, '<h2>$1</h2>');
+//   // ... process other headers similarly
+
+//   // Process unordered lists
+//   content = content.replace(/<ul>(.*?)<\/ul>/g, (match, listContent) => {
+//     const listItems = listContent.split('<li>').slice(1); // Split into individual list items
+//     const formattedListItems = listItems.map(item => `<li>${item}</li>`); // Add <li> tags
+//     return `<ul>${formattedListItems.join('')}</ul>`;
+//   });
+
+//   // Process bold text
+//   content = content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+//   // Process line breaks
+//   content = content.replace(/\n/g, '<br>');
+
+//   // ... process other formatting as needed
+
+//   return content;
+// }
+
+
+function processRichTextFormatting(content) {
+  // Process hyperlinks
+  content = content.replace(/<a href="([^"]+)">([^<]+)<\/a>/g, '<a href="$1">$2</a>');
+
+  // Process headers
+  content = content.replace(/<h1>(.*?)<\/h1>/g, '<h1>$1</h1>');
+  content = content.replace(/<h2>(.*?)<\/h2>/g, '<h2>$1</h2>');
+  // ... process other headers similarly
+
+  // Process bold text
+  content = content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+  // Process line breaks
+  content = content.replace(/\n/g, '<br>');
+
+  // ... process other formatting as needed
+
+  return content;
+}
+
+  
   
 function displayRecordData(record) {
 
@@ -257,39 +331,55 @@ function displayRecordData(record) {
     //Requirements
     const requirementLabel = document.createElement('label');
     requirementLabel.textContent = 'Requirements:';
-    const requirementValue = document.createElement('p');
-    requirementValue.textContent = record.fields['Requirements'] || '';
+    const requirementValue = document.createElement('div');
+    // requirementValue.textContent = record.fields['Requirements'] || '';
+    requirementValue.innerHTML = processRichTextFormatting(record.fields['Requirements'] || '');
+
     learnMoreDetailDiv.appendChild(requirementLabel);
     learnMoreDetailDiv.appendChild(requirementValue);
+
+    learnMoreDetailDiv.appendChild(document.createElement('br'));
+
 
     //Responsibilities
     const responsibilitiesLabel = document.createElement('label');
     responsibilitiesLabel.textContent = 'Responsibilities: ';
-    const responsibilitiesValue = document.createElement('p');
-    responsibilitiesValue.textContent = record.fields['Responsibilities'] || '';
+    const responsibilitiesValue = document.createElement('div');
+    // responsibilitiesValue.textContent = record.fields['Responsibilities'] || '';
+    responsibilitiesValue.innerHTML = processRichTextFormatting(record.fields['Responsibilities'] || '');
+
     learnMoreDetailDiv.appendChild(responsibilitiesLabel);
     learnMoreDetailDiv.appendChild(responsibilitiesValue);
 
+
+
+    learnMoreDetailDiv.appendChild(document.createElement('br'));
+
+
     //Age Detail
-    const ageDetailValue = document.createElement('p');
-    ageDetailValue.textContent = record.fields['Age Detail'] || '';
+    const ageDetailValue = document.createElement('div');
+    // ageDetailValue.textContent = record.fields['Age Detail'] || '';
+    ageDetailValue.innerHTML = processRichTextFormatting(record.fields['Age Detail'] || '');
     if(ageDetailValue.textContent.length !== 0)
     {
       const ageDetailLabel = document.createElement('label');
       ageDetailLabel.textContent = 'Age Information: '; 
       learnMoreDetailDiv.appendChild(ageDetailLabel);
       learnMoreDetailDiv.appendChild(ageDetailValue);
+      learnMoreDetailDiv.appendChild(document.createElement('br'));
     }
 
     //Notes
-    const notesValue = document.createElement('p');
-    notesValue.textContent = record.fields['Notes'] || '';
+    const notesValue = document.createElement('div');
+    // notesValue.textContent = record.fields['Notes'] || '';
+    notesValue.innerHTML = processRichTextFormatting(record.fields['Notes'] || '');
     if(notesValue.textContent.length !== 0)
     {
       const notesLabel = document.createElement('label');
-      notesLabel.textContent = 'Special Notes: '; 
+      notesLabel.textContent = 'Additional Notes: '; 
       learnMoreDetailDiv.appendChild(notesLabel);
       learnMoreDetailDiv.appendChild(notesValue);
+      learnMoreDetailDiv.appendChild(document.createElement('br'));
     }
 
     //Spot
@@ -304,23 +394,28 @@ function displayRecordData(record) {
     }
 
     //Commitment Requirements
-    const commitValue = document.createElement('p');
-    commitValue.textContent = record.fields['Commitment Requirement'] || '';
+    const commitValue = document.createElement('div');
+    // commitValue.textContent = record.fields['Commitment Requirement'] || '';
+    commitValue.innerHTML = processRichTextFormatting(record.fields['Commitment Requirement'] || '');
     if(commitValue.textContent.length !== 0)
     {
       const commitLabel = document.createElement('label');
       commitLabel.textContent = 'Commitment Requirements: '; 
       learnMoreDetailDiv.appendChild(commitLabel);
       learnMoreDetailDiv.appendChild(commitValue);
+      learnMoreDetailDiv.appendChild(document.createElement('br'));
     }
 
     //Schedule
     const scheduleLabel = document.createElement('label');
     scheduleLabel.textContent = 'Schedule:';
-    const scheduleValue = document.createElement('p');
-    scheduleValue.textContent = record.fields['Schedule'] || '';
+    const scheduleValue = document.createElement('div');
+    // scheduleValue.textContent = record.fields['Schedule'] || '';
+    scheduleValue.innerHTML = processRichTextFormatting(record.fields['Schedule'] || '');
+
     learnMoreDetailDiv.appendChild(scheduleLabel);
     learnMoreDetailDiv.appendChild(scheduleValue);
+    learnMoreDetailDiv.appendChild(document.createElement('br'));
 
     //Contact
     const contactLabel = document.createElement('label');

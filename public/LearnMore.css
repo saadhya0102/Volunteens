@@ -134,6 +134,10 @@
   .text {
     margin: 0;
   }
+
+  .section {
+    margin-bottom: 50px; /* Adjust the value as needed */
+  }
   /* Adjust column sizes for smaller screens */
   @media screen and (max-width: 768px) {
     .learn-more-info,
